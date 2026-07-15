@@ -31,8 +31,15 @@
     img.dataset.fbDone = '1';
     img.src = 'https://newhealhouse.vercel.app' + path;
   }
-  // 신규 이미지(대체본 없음): 숨기고 파일명 안내 박스 노출
-  function ph(img){ img.style.display='none'; }
+  // 신규 이미지: jpg가 없으면 png로 한 번 더 시도, 둘 다 없으면 파일명 안내 박스 노출
+  function ph(img){
+    if(!img.dataset.pngTried && /\.jpg($|\?)/i.test(img.src)){
+      img.dataset.pngTried = '1';
+      img.src = img.src.replace(/\.jpg($|\?)/i, '.png$1');
+      return;
+    }
+    img.style.display='none';
+  }
 </script>
 
 <script type="application/ld+json">
