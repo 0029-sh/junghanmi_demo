@@ -76,7 +76,6 @@
 /* ── 디자인 토큰 (기존 사이트 재현) ─────────────────────── */
 :root{
   --paper:#ffffff; --white:#ffffff; --cream:#f2efe9;
-  --hl:rgba(150,211,245,0.55);
   --hairline:#e5e2dd; --ink:#131313; --charcoal:#3f3c38;
   --stone:#8a8580; --mist:#b8b3ac; --sky-deep:#3f6c93;
   --serif:'Noto Serif KR', Georgia, serif;
@@ -220,34 +219,21 @@ button{ font-family:inherit; }
 .sec-link:hover .arr{ transform:translateX(4px); }
 
 /* ── 진료 철학 ──────────────────────────────────────────── */
-.phil-quote{
-  font-family:var(--serif); font-weight:600;
-  font-size:1.1875rem; line-height:1.8; color:var(--ink);
-  margin:1.5rem 0 0; max-width:40rem;
+.phil-lead{
+  font-family:var(--serif); font-weight:600; color:var(--ink);
+  font-size:clamp(1.1875rem, 2.4vw, 1.375rem); line-height:1.85;
+  margin:1rem 0 0;
 }
 .phil p{
   margin:1.25rem 0 0; max-width:42rem;
   font-size:1rem; line-height:1.95; color:var(--charcoal);
 }
-.phil p strong{ color:var(--ink); font-weight:600; }
-.hl{
-  background:transparent; color:inherit;
-  background-image:linear-gradient(to right, var(--hl), var(--hl));
-  background-repeat:no-repeat;
-  background-size:0% 82%;
-  background-position:0 62%;
-  border-radius:0.2em;
-  -webkit-box-decoration-break:clone; box-decoration-break:clone;
-  padding:0.05em 0.12em; margin:0 -0.12em;
-  transition:background-size 0.9s var(--ease);
-}
-.hl.on{ background-size:100% 82%; }
 
 /* ── 시그니처 시술 (전후 슬라이더) ─────────────────────── */
 .sig-block{ margin-top:2.25rem; }
-.sig-block h3{ font-family:var(--serif); font-size:1.125rem; font-weight:600; margin:0; }
+.sig-block h3{ font-family:var(--serif); font-size:clamp(1.3125rem, 2.4vw, 1.5rem); font-weight:600; margin:0; }
 .sig-block .desc{ margin:0.4rem 0 0; font-size:0.9375rem; line-height:1.7; color:var(--charcoal); }
-.sig-slider{ position:relative; margin-top:1rem; }
+.sig-slider{ position:relative; margin-top:1rem; width:50%; min-width:min(100%, 20rem); }
 .sig-view{ overflow:hidden; border-radius:var(--r); }
 .sig-track{ display:flex; transition:transform 0.55s var(--ease); }
 .sig-slide{ flex:0 0 100%; margin:0; min-width:0; }
@@ -422,7 +408,7 @@ button{ font-family:inherit; }
 .byline .nm{ font-size:0.8125rem; font-weight:600; line-height:1.35; }
 .byline .mt{ display:block; font-size:0.75rem; color:var(--stone); font-weight:400; }
 
-/* ── 함께 하는 의료진 ───────────────────────────────────── */
+/* ── 함께 일하는 의사 ───────────────────────────────────── */
 .doc-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 1rem; margin-top:1.5rem; list-style:none; padding:0; }
 @media (min-width:768px){ .doc-grid{ grid-template-columns:repeat(4,1fr); } }
 .doc .pic{ aspect-ratio:1/1; border-radius:var(--r); overflow:hidden; background:var(--cream); }
@@ -570,12 +556,9 @@ footer{ background:var(--cream); }
       <!-- ═══════════ 진료 철학 ═══════════ -->
       <section class="sec phil" id="philosophy" aria-label="진료 철학">
         <p class="label-caps">Philosophy</p>
-        <h2 class="sec-title">저는 이런 마음으로 진료를 합니다</h2>
-
-        <p class="phil-quote">“원장님, 유명하고 비싼 시술을 받았는데 효과가 없는 거 같아요.”</p>
-        <p>진료실에서 이런 하소연을 들을 때마다 안타까운 마음이 듭니다. <mark class="hl">살펴보면 대부분 원인은 하나로 좁혀집니다. 시술을 먼저 정해두고 거기에 얼굴을 맞췄기 때문이죠.</mark></p>
-        <p>그래서 저는 늘 반대로 진료합니다. <mark class="hl">어떤 시술이 필요한지 정하기 전에 얼굴부터 가만히 들여다봅니다.</mark> 환자분만이 가진 매력을 살리려면 어디를 어떻게 다듬는 것이 좋을지 먼저 밑그림을 그리는 겁니다. 이런 과정을 거쳐 완성되는 것이 바로 저희가 추구하는 <mark class="hl"><strong>‘작우빛(작고 우아한 빛나는 얼굴)’</strong>입니다.</mark></p>
-        <p>제가 생각하는 진짜 좋은 시술은 티가 나는 시술이 아닙니다. “요즘 좋은 일 있어? 얼굴 참 좋아 보인다”라는 기분 좋은 인사를 듣게 해 드리는 것입니다. <mark class="hl">원래 그랬던 것처럼 자연스럽게, 그리고 5년, 10년 뒤에도 변함없이 아름다운 얼굴을 만들어 드리는 것이 제 진료의 목표입니다.</mark></p>
+        <p class="phil-lead">안녕하세요, 정한미입니다.<br>한 번의 시술로 기억되는 의사보다,<br>얼굴을 오래 믿고 맡길 수 있는 의사가 되고 싶습니다.</p>
+        <p>유명하고 비싼 시술도 얼굴에 맞지 않으면 만족스러운 결과를 만들기 어렵습니다. 그래서 저는 시술을 먼저 정하지 않습니다. 얼굴의 비율과 피부 상태, 환자분만의 매력을 충분히 살핀 뒤 필요한 변화를 설계합니다.</p>
+        <p>시술한 티보다 “요즘 얼굴이 좋아 보인다”는 말을 들을 수 있도록, 원래 내 얼굴처럼 자연스럽고 시간이 지나도 조화로운 아름다움을 만들겠습니다.</p>
       </section>
 
       <!-- ═══════════ 시그니처 시술 ═══════════ -->
@@ -583,7 +566,7 @@ footer{ background:var(--cream); }
         <div class="sec-head">
           <div>
             <p class="label-caps">Signature</p>
-            <h2 class="sec-title">정한미 원장의 시그니처 시술</h2>
+            <h2 class="sec-title">시그니처 시술</h2>
             <p class="sec-sub">‘작우빛’을 이루는 세 가지 약속입니다.</p>
           </div>
           <a class="sec-link" href="https://newhealhouse.vercel.app/signatures/" target="_blank" rel="noopener">작·우·빛 얼굴 만들기 <span class="arr" aria-hidden="true">→</span></a>
@@ -661,7 +644,7 @@ footer{ background:var(--cream); }
         <div class="sec-head">
           <div>
             <p class="label-caps">Activities</p>
-            <h2 class="sec-title">진료실 밖의 정한미 원장</h2>
+            <h2 class="sec-title">정한미 원장의 활동</h2>
           </div>
           <div class="vt" role="group" aria-label="보기 방식">
             <button type="button" data-view-btn="gallery" aria-pressed="true">갤러리</button>
@@ -732,7 +715,7 @@ footer{ background:var(--cream); }
         <div class="sec-head">
           <div>
             <p class="label-caps">Media</p>
-            <h2 class="sec-title">영상으로 만나는 정한미 원장</h2>
+            <h2 class="sec-title">피부텐텐</h2>
             <p class="sec-sub">진료실에서 못다 한 피부 이야기를 영상으로 풀어드립니다. 유튜브 ‘피부텐텐’에서 더 많은 영상을 만나보세요.</p>
           </div>
           <a class="sec-link" href="https://www.youtube.com/@pibutenten" target="_blank" rel="noopener">채널 보기 <span class="arr" aria-hidden="true">→</span></a>
@@ -785,7 +768,7 @@ footer{ background:var(--cream); }
         <div class="sec-head">
           <div>
             <p class="label-caps">Space</p>
-            <h2 class="sec-title">정한미 원장이 있는 공간</h2>
+            <h2 class="sec-title">강남점 소개</h2>
             <p class="sec-sub">진료도, 시술도 이곳에서 이뤄집니다. 정한미 원장을 만날 수 있는 상담실부터 시술실까지 미리 둘러보세요.</p>
           </div>
           <a class="sec-link" href="https://newhealhouse.vercel.app/clinics/gangnam/" target="_blank" rel="noopener">지점 안내 <span class="arr" aria-hidden="true">→</span></a>
@@ -808,7 +791,7 @@ footer{ background:var(--cream); }
         <div class="sec-head">
           <div>
             <p class="label-caps">Equipment</p>
-            <h2 class="sec-title">정한미 원장이 사용하는 장비</h2>
+            <h2 class="sec-title">장비 소개</h2>
             <p class="sec-sub">같은 고민이라도 피부 상태에 따라 다른 장비를 씁니다. 정한미 원장이 진료에 사용하는 장비들을 소개합니다.</p>
           </div>
           <a class="sec-link" href="https://newhealhouse.vercel.app/antiaging/" target="_blank" rel="noopener">전체 장비 <span class="arr" aria-hidden="true">→</span></a>
@@ -885,12 +868,12 @@ footer{ background:var(--cream); }
         </div>
       </section>
 
-      <!-- ═══════════ 함께 하는 의료진 ═══════════ -->
-      <section class="sec" id="colleagues" aria-label="함께 하는 의료진">
+      <!-- ═══════════ 함께 일하는 의사 ═══════════ -->
+      <section class="sec" id="colleagues" aria-label="함께 일하는 의사">
         <div class="sec-head">
           <div>
             <p class="label-caps">Colleagues</p>
-            <h2 class="sec-title">함께 하는 의료진</h2>
+            <h2 class="sec-title">함께 일하는 의사</h2>
           </div>
           <a class="sec-link" href="https://newhealhouse.vercel.app/doctors/" target="_blank" rel="noopener">더보기 <span class="arr" aria-hidden="true">→</span></a>
         </div>
@@ -927,12 +910,12 @@ footer{ background:var(--cream); }
           <li><a href="#philosophy">진료 철학</a></li>
           <li><a href="#signature">시그니처 시술</a></li>
           <li><a href="#profile">경력·학력·학술</a></li>
-          <li><a href="#activities">진료실 밖의 활동</a></li>
-          <li><a href="#media">영상으로 만나기</a></li>
-          <li><a href="#space">강남점 공간</a></li>
-          <li><a href="#equipment">시술 장비</a></li>
+          <li><a href="#activities">정한미 원장의 활동</a></li>
+          <li><a href="#media">피부텐텐</a></li>
+          <li><a href="#space">강남점 소개</a></li>
+          <li><a href="#equipment">장비 소개</a></li>
           <li><a href="#columns">칼럼</a></li>
-          <li><a href="#colleagues">함께 하는 의료진</a></li>
+          <li><a href="#colleagues">함께 일하는 의사</a></li>
         </ol>
       </nav>
     </aside>
@@ -976,24 +959,6 @@ footer{ background:var(--cream); }
       });
     });
   });
-
-  /* 진료 철학 형광펜: 스크롤 내리면 칠해지고, 올려서 화면 아래로 벗어나면 지워짐 */
-  var marks = document.querySelectorAll('.hl');
-  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
-    marks.forEach(function(m){ m.classList.add('on'); });
-  } else {
-    var hlIO = new IntersectionObserver(function(entries){
-      entries.forEach(function(en){
-        if (en.isIntersecting){
-          en.target.classList.add('on');
-        } else if (en.boundingClientRect.top > 0){
-          /* 요소가 뷰포트 아래쪽에 있음 = 스크롤을 올려 벗어난 상태 → 형광펜 제거 */
-          en.target.classList.remove('on');
-        }
-      });
-    }, { threshold: 0.55, rootMargin: '0px 0px -8% 0px' });
-    marks.forEach(function(m){ hlIO.observe(m); });
-  }
 
   /* 시그니처 전후 슬라이더: images/signature/ 의 번호 파일(01, 02…)을 자동 탐색해 슬라이드 생성 */
   function sigInit(sl, n){
