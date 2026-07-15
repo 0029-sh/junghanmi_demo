@@ -231,6 +231,43 @@ button{ font-family:inherit; }
 }
 .hl.on{ background-size:100% 82%; }
 
+/* ── 시그니처 시술 (전후 슬라이더) ─────────────────────── */
+.sig-block{ margin-top:2.25rem; }
+.sig-block h3{ font-family:var(--serif); font-size:1.125rem; font-weight:600; margin:0; }
+.sig-block .desc{ margin:0.4rem 0 0; font-size:0.9375rem; line-height:1.7; color:var(--charcoal); }
+.sig-slider{ position:relative; margin-top:1rem; }
+.sig-view{ overflow:hidden; border-radius:var(--r); }
+.sig-track{ display:flex; transition:transform 0.55s var(--ease); }
+.sig-slide{ flex:0 0 100%; margin:0; min-width:0; }
+.sig-pair{ display:grid; grid-template-columns:1fr 1fr; gap:2px; }
+.sig-pair .imgbox{ aspect-ratio:3/4; }
+.sig-tag{
+  position:absolute; top:0.6rem; left:0.6rem; z-index:3;
+  font-size:0.625rem; letter-spacing:0.14em; text-transform:uppercase;
+  color:#fff; background:rgba(15,15,15,0.55);
+  border-radius:999px; padding:0.24rem 0.6rem;
+}
+.sig-slide figcaption{
+  padding:0.6rem 0.25rem 0; text-align:center;
+  font-size:0.8125rem; color:var(--stone);
+}
+.sig-nav{
+  position:absolute; top:45%; transform:translateY(-50%); z-index:4;
+  width:2.5rem; height:2.5rem; border-radius:999px; cursor:pointer;
+  border:1px solid rgba(255,255,255,0.65); background:rgba(15,15,15,0.45); color:#fff;
+  display:grid; place-items:center; font-size:1rem;
+  transition:background .2s;
+}
+.sig-nav:hover{ background:rgba(15,15,15,0.72); }
+.sig-prev{ left:0.75rem; } .sig-next{ right:0.75rem; }
+.sig-cnt{
+  position:absolute; top:0.6rem; right:0.75rem; z-index:4;
+  font-size:0.75rem; letter-spacing:0.06em; color:rgba(255,255,255,0.92);
+  background:rgba(15,15,15,0.55); border-radius:999px; padding:0.2rem 0.65rem;
+  font-variant-numeric:tabular-nums;
+}
+.sig-legal{ margin:1.5rem 0 0; font-size:0.75rem; line-height:1.7; color:var(--mist); }
+
 /* ── 경력·학력·학술 ─────────────────────────────────────── */
 .profile-grid{ display:grid; gap:1.75rem 2.5rem; margin-top:1.5rem; }
 @media (min-width:768px){ .profile-grid{ grid-template-columns:1fr 1fr; } }
@@ -534,6 +571,105 @@ footer{ background:var(--cream); }
         <p>제가 생각하는 진짜 좋은 시술은 티가 나는 시술이 아닙니다. “요즘 좋은 일 있어? 얼굴 참 좋아 보인다”라는 기분 좋은 인사를 듣게 해 드리는 것입니다. <mark class="hl">원래 그랬던 것처럼 자연스럽게, 그리고 5년, 10년 뒤에도 변함없이 아름다운 얼굴을 만들어 드리는 것이 제 진료의 목표입니다.</mark></p>
       </section>
 
+      <!-- ═══════════ 시그니처 시술 ═══════════ -->
+      <section class="sec" id="signature" aria-label="시그니처 시술">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Signature</p>
+            <h2 class="sec-title">정한미 원장의 시그니처 시술</h2>
+            <p class="sec-sub">‘작우빛’을 이루는 세 가지 약속입니다.</p>
+          </div>
+          <a class="sec-link" href="https://newhealhouse.vercel.app/signatures/" target="_blank" rel="noopener">작·우·빛 얼굴 만들기 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <!-- ✏️ 전후사진 세트 추가 방법: <figure class="sig-slide"> 블록을 복사해 파일명 숫자만 변경 (small-03, small-04 …) -->
+        <div class="sig-block">
+          <h3>작은 얼굴 만들기</h3>
+          <p class="desc">윤곽을 섬세하게 다듬어 한층 작고 깔끔한 얼굴로</p>
+          <div class="sig-slider">
+            <div class="sig-view">
+              <div class="sig-track">
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/small-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/small-01-before.jpg" alt="작은 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/small-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/small-01-after.jpg" alt="작은 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/small-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/small-02-before.jpg" alt="작은 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/small-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/small-02-after.jpg" alt="작은 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+              </div>
+            </div>
+            <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
+            <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
+            <span class="sig-cnt" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="sig-block">
+          <h3>우아한 얼굴 만들기</h3>
+          <p class="desc">부드러운 곡선을 되찾아 한층 입체적인 얼굴로</p>
+          <div class="sig-slider">
+            <div class="sig-view">
+              <div class="sig-track">
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/elegant-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/elegant-01-before.jpg" alt="우아한 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/elegant-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/elegant-01-after.jpg" alt="우아한 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/elegant-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/elegant-02-before.jpg" alt="우아한 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/elegant-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/elegant-02-after.jpg" alt="우아한 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+              </div>
+            </div>
+            <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
+            <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
+            <span class="sig-cnt" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <div class="sig-block">
+          <h3>빛나는 얼굴 만들기</h3>
+          <p class="desc">피부 속부터 촘촘하게 채워 한층 생기있는 얼굴로</p>
+          <div class="sig-slider">
+            <div class="sig-view">
+              <div class="sig-track">
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/glow-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/glow-01-before.jpg" alt="빛나는 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/glow-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/glow-01-after.jpg" alt="빛나는 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+                <figure class="sig-slide">
+                  <div class="sig-pair">
+                    <div class="imgbox" data-file="images/signature/glow-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/glow-02-before.jpg" alt="빛나는 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
+                    <div class="imgbox" data-file="images/signature/glow-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/glow-02-after.jpg" alt="빛나는 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
+                  </div>
+                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
+                </figure>
+              </div>
+            </div>
+            <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
+            <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
+            <span class="sig-cnt" aria-live="polite"></span>
+          </div>
+        </div>
+
+        <p class="sig-legal">※ 시술 전후 사진은 동일한 조건에서 촬영되었으며, 시술 효과는 개인에 따라 차이가 있을 수 있고 부작용이 발생할 수 있습니다.</p>
+      </section>
+
       <!-- ═══════════ 경력·학력·학술 ═══════════ -->
       <section class="sec" id="profile" aria-label="경력·학력·학술">
         <p class="label-caps">Profile</p>
@@ -835,6 +971,7 @@ footer{ background:var(--cream); }
         <ol>
           <li><a href="#message">인사말</a></li>
           <li><a href="#philosophy">진료 철학</a></li>
+          <li><a href="#signature">시그니처 시술</a></li>
           <li><a href="#profile">경력·학력·학술</a></li>
           <li><a href="#activities">진료실 밖의 활동</a></li>
           <li><a href="#media">영상으로 만나기</a></li>
@@ -903,6 +1040,38 @@ footer{ background:var(--cream); }
     }, { threshold: 0.55, rootMargin: '0px 0px -8% 0px' });
     marks.forEach(function(m){ hlIO.observe(m); });
   }
+
+  /* 시그니처 전후 슬라이더: 좌우 버튼 + 스와이프, 순환 */
+  document.querySelectorAll('.sig-slider').forEach(function(sl){
+    var track = sl.querySelector('.sig-track'),
+        n = track.children.length,
+        cnt = sl.querySelector('.sig-cnt'),
+        prev = sl.querySelector('.sig-prev'),
+        next = sl.querySelector('.sig-next'),
+        i = 0;
+    function go(to){
+      i = (to + n) % n;
+      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+      if (cnt) cnt.textContent = (i + 1) + ' / ' + n;
+    }
+    if (n < 2){
+      if (prev) prev.hidden = true;
+      if (next) next.hidden = true;
+      if (cnt) cnt.hidden = true;
+    } else {
+      prev.addEventListener('click', function(){ go(i - 1); });
+      next.addEventListener('click', function(){ go(i + 1); });
+      var sx = null;
+      sl.addEventListener('touchstart', function(e){ sx = e.changedTouches[0].clientX; }, { passive:true });
+      sl.addEventListener('touchend', function(e){
+        if (sx === null) return;
+        var dx = e.changedTouches[0].clientX - sx;
+        if (Math.abs(dx) > 44) go(dx < 0 ? i + 1 : i - 1);
+        sx = null;
+      }, { passive:true });
+    }
+    go(0);
+  });
 
   /* 장비 더보기 */
   var eqPlus = document.getElementById('eq-plus');
