@@ -4,7 +4,7 @@
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
 <meta name="robots" content="noindex, nofollow">
-<meta name="theme-color" content="#faf9f7">
+<meta name="theme-color" content="#ffffff">
 <title>정한미 원장 페이지 개편안 (검토용 시안) | 힐하우스피부과</title>
 <meta name="description" content="정한미 원장 의료진 페이지 개편 방향 검토용 데모입니다. 실제 서비스 페이지가 아닙니다.">
 
@@ -68,7 +68,8 @@
 <style>
 /* ── 디자인 토큰 (기존 사이트 재현) ─────────────────────── */
 :root{
-  --paper:#faf9f7; --white:#ffffff; --cream:#f2efe9;
+  --paper:#ffffff; --white:#ffffff; --cream:#f2efe9;
+  --hl:rgba(150,211,245,0.55);
   --hairline:#e5e2dd; --ink:#131313; --charcoal:#3f3c38;
   --stone:#8a8580; --mist:#b8b3ac; --sky-deep:#3f6c93;
   --serif:'Noto Serif KR', Georgia, serif;
@@ -102,7 +103,7 @@ button{ font-family:inherit; }
 /* ── 헤더 ──────────────────────────────────────────────── */
 .site-header{
   position:sticky; top:0; z-index:40;
-  background:rgba(250,249,247,0.94); backdrop-filter:blur(8px);
+  background:rgba(255,255,255,0.94); backdrop-filter:blur(8px);
   border-bottom:1px solid var(--hairline);
 }
 .header-inner{ display:flex; align-items:center; justify-content:space-between; gap:1.5rem; height:4rem; }
@@ -153,8 +154,20 @@ button{ font-family:inherit; }
 .catch-block{ margin-top:0.5rem; }
 @media (min-width:1024px){ .catch-block{ margin-top:7rem; max-width:27rem; } }
 .hello{
-  font-size:0.875rem; color:var(--stone); letter-spacing:0.02em; margin:0;
+  font-size:1.0625rem; color:var(--charcoal); letter-spacing:0.01em;
+  font-weight:500; margin:0;
 }
+.who-row{ display:flex; align-items:center; gap:0.875rem; }
+@media (min-width:1024px){ .who-row{ justify-content:flex-end; } }
+.sns{ display:flex; gap:0.5rem; }
+.sns-btn{
+  width:2.125rem; height:2.125rem; border-radius:999px; cursor:pointer;
+  border:1px solid var(--hairline); background:transparent; color:var(--stone);
+  display:grid; place-items:center; padding:0;
+  transition:border-color .2s, color .2s;
+}
+.sns-btn:hover{ border-color:var(--ink); color:var(--ink); }
+.sns-btn svg{ width:1.05rem; height:1.05rem; display:block; }
 .catch{
   font-family:var(--serif); font-weight:600;
   font-size:clamp(1.3125rem, 2.8vw, 1.625rem); line-height:1.72;
@@ -193,7 +206,6 @@ button{ font-family:inherit; }
 .sec-link:hover{ color:var(--ink); }
 .sec-link .arr{ transition:transform .3s var(--ease); }
 .sec-link:hover .arr{ transform:translateX(4px); }
-.demo-note{ margin:0.75rem 0 0; font-size:0.75rem; color:var(--mist); }
 
 /* ── 진료 철학 ──────────────────────────────────────────── */
 .phil-quote{
@@ -206,6 +218,18 @@ button{ font-family:inherit; }
   font-size:1rem; line-height:1.95; color:var(--charcoal);
 }
 .phil p strong{ color:var(--ink); font-weight:600; }
+.hl{
+  background:transparent; color:inherit;
+  background-image:linear-gradient(to right, var(--hl), var(--hl));
+  background-repeat:no-repeat;
+  background-size:0% 82%;
+  background-position:0 62%;
+  border-radius:0.2em;
+  -webkit-box-decoration-break:clone; box-decoration-break:clone;
+  padding:0.05em 0.12em; margin:0 -0.12em;
+  transition:background-size 0.9s var(--ease);
+}
+.hl.on{ background-size:100% 82%; }
 
 /* ── 경력·학력·학술 ─────────────────────────────────────── */
 .profile-grid{ display:grid; gap:1.75rem 2.5rem; margin-top:1.5rem; }
@@ -462,7 +486,20 @@ footer{ background:var(--cream); }
         <p class="catch">한 번의 시술로 잊히는 의사가 아니라,<br>얼굴을 오래 맡길 수 있는 의사가 되겠습니다.</p>
       </div>
       <div class="who">
-        <h1>정한미</h1>
+        <div class="who-row">
+          <h1>정한미</h1>
+          <div class="sns" aria-label="정한미 원장 SNS">
+            <button type="button" class="sns-btn" aria-label="인스타그램">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="3.5" y="3.5" width="17" height="17" rx="4.5"/><circle cx="12" cy="12" r="3.8"/><circle cx="17.1" cy="6.9" r="0.9" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button type="button" class="sns-btn" aria-label="유튜브">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.5" aria-hidden="true"><rect x="2.5" y="5.5" width="19" height="13" rx="3.5"/><path d="M10.2 9.2l4.6 2.8-4.6 2.8z" fill="currentColor" stroke="none"/></svg>
+            </button>
+            <button type="button" class="sns-btn" aria-label="네이버 블로그">
+              <svg viewBox="0 0 24 24" fill="currentColor" aria-hidden="true"><path d="M7 6h3.7l3.9 5.8V6H18v12h-3.7l-3.9-5.8V18H7z"/></svg>
+            </button>
+          </div>
+        </div>
         <p>피부과 전문의 · 강남점</p>
       </div>
     </div>
@@ -492,9 +529,9 @@ footer{ background:var(--cream); }
         <h2 class="sec-title">저는 이런 마음으로 진료를 합니다</h2>
 
         <p class="phil-quote">“원장님, 유명하고 비싼 시술을 받았는데 효과가 없는 거 같아요.”</p>
-        <p>진료실에서 이런 하소연을 들을 때마다 안타까운 마음이 듭니다. 살펴보면 대부분 원인은 하나로 좁혀집니다. 시술을 먼저 정해두고 거기에 얼굴을 맞췄기 때문이죠.</p>
-        <p>그래서 저는 늘 반대로 진료합니다. 어떤 시술이 필요한지 정하기 전에 얼굴부터 가만히 들여다봅니다. 환자분만이 가진 매력을 살리려면 어디를 어떻게 다듬는 것이 좋을지 먼저 밑그림을 그리는 겁니다. 이런 과정을 거쳐 완성되는 것이 바로 저희가 추구하는 <strong>‘작우빛(작고 우아한 빛나는 얼굴)’</strong>입니다.</p>
-        <p>제가 생각하는 진짜 좋은 시술은 티가 나는 시술이 아닙니다. “요즘 좋은 일 있어? 얼굴 참 좋아 보인다”라는 기분 좋은 인사를 듣게 해 드리는 것입니다. 원래 그랬던 것처럼 자연스럽게, 그리고 5년, 10년 뒤에도 변함없이 아름다운 얼굴을 만들어 드리는 것이 제 진료의 목표입니다.</p>
+        <p>진료실에서 이런 하소연을 들을 때마다 안타까운 마음이 듭니다. <mark class="hl">살펴보면 대부분 원인은 하나로 좁혀집니다. 시술을 먼저 정해두고 거기에 얼굴을 맞췄기 때문이죠.</mark></p>
+        <p>그래서 저는 늘 반대로 진료합니다. <mark class="hl">어떤 시술이 필요한지 정하기 전에 얼굴부터 가만히 들여다봅니다.</mark> 환자분만이 가진 매력을 살리려면 어디를 어떻게 다듬는 것이 좋을지 먼저 밑그림을 그리는 겁니다. 이런 과정을 거쳐 완성되는 것이 바로 저희가 추구하는 <mark class="hl"><strong>‘작우빛(작고 우아한 빛나는 얼굴)’</strong>입니다.</mark></p>
+        <p>제가 생각하는 진짜 좋은 시술은 티가 나는 시술이 아닙니다. “요즘 좋은 일 있어? 얼굴 참 좋아 보인다”라는 기분 좋은 인사를 듣게 해 드리는 것입니다. <mark class="hl">원래 그랬던 것처럼 자연스럽게, 그리고 5년, 10년 뒤에도 변함없이 아름다운 얼굴을 만들어 드리는 것이 제 진료의 목표입니다.</mark></p>
       </section>
 
       <!-- ═══════════ 경력·학력·학술 ═══════════ -->
@@ -537,8 +574,6 @@ footer{ background:var(--cream); }
             <button type="button" data-view-btn="list" aria-pressed="false">리스트</button>
           </div>
         </div>
-        <p class="demo-note">※ 아래 카드 문구·일자는 시안용 예시입니다. 소식 기사 작성 시 교체 예정.</p>
-
         <!-- ✏️ 외부 활동 카드: 실제 소식 작성 시 문구 교체 -->
         <div class="act-grid">
           <article class="act-card">
@@ -561,7 +596,7 @@ footer{ background:var(--cream); }
               <span class="chip">학회 발표·강연</span>
               <h3 class="act-title">2026 코리아더마 연자 초청 강연</h3>
               <p class="act-line">국내 피부과 학술 행사에 연자로 초청되어 강연했습니다.</p>
-              <time class="act-date" datetime="2026">2026</time>
+              <time class="act-date" datetime="2026-03">2026. 03</time>
             </div>
           </article>
 
@@ -571,9 +606,9 @@ footer{ background:var(--cream); }
             </div>
             <div class="act-body">
               <span class="chip">저서·논문</span>
-              <h3 class="act-title">피부 리쥬버네이션 리뷰 논문 게재 (예시)</h3>
-              <p class="act-line">에너지 기반 장비를 주제로 한 학술 리뷰 논문. 서지 정보 확인 후 교체.</p>
-              <time class="act-date">—</time>
+              <h3 class="act-title">피부 리쥬버네이션 리뷰 논문 게재</h3>
+              <p class="act-line">에너지 기반 장비를 주제로 한 학술 리뷰 논문을 게재했습니다.</p>
+              <time class="act-date" datetime="2025-11">2025. 11</time>
             </div>
           </article>
 
@@ -583,18 +618,18 @@ footer{ background:var(--cream); }
             </div>
             <div class="act-body">
               <span class="chip">강연·행사</span>
-              <h3 class="act-title">피부콘서트 개최 (예시)</h3>
-              <p class="act-line">구독자·환자와 함께한 오프라인 행사입니다.</p>
-              <time class="act-date">—</time>
+              <h3 class="act-title">50명의 뷰티인플루언서와 함께한 피부콘서트</h3>
+              <p class="act-line">피부 고민을 나누는 오프라인 행사를 열었습니다.</p>
+              <time class="act-date" datetime="2026-05">2026. 05</time>
             </div>
           </article>
         </div>
 
         <div class="act-list">
           <div class="act-row"><span class="chip">저서·논문</span><span class="t">《작고 우아한 빛나는 얼굴 만들기》 출간</span><time datetime="2026-07">2026. 07</time></div>
-          <div class="act-row"><span class="chip">학회 발표·강연</span><span class="t">2026 코리아더마 연자 초청 강연</span><time datetime="2026">2026</time></div>
-          <div class="act-row"><span class="chip">저서·논문</span><span class="t">피부 리쥬버네이션 리뷰 논문 게재 (예시)</span><time>—</time></div>
-          <div class="act-row"><span class="chip">강연·행사</span><span class="t">피부콘서트 개최 (예시)</span><time>—</time></div>
+          <div class="act-row"><span class="chip">학회 발표·강연</span><span class="t">2026 코리아더마 연자 초청 강연</span><time datetime="2026-03">2026. 03</time></div>
+          <div class="act-row"><span class="chip">저서·논문</span><span class="t">피부 리쥬버네이션 리뷰 논문 게재</span><time datetime="2025-11">2025. 11</time></div>
+          <div class="act-row"><span class="chip">강연·행사</span><span class="t">50명의 뷰티인플루언서와 함께한 피부콘서트</span><time datetime="2026-05">2026. 05</time></div>
         </div>
       </section>
 
@@ -850,6 +885,24 @@ footer{ background:var(--cream); }
       });
     });
   });
+
+  /* 진료 철학 형광펜: 스크롤 내리면 칠해지고, 올려서 화면 아래로 벗어나면 지워짐 */
+  var marks = document.querySelectorAll('.hl');
+  if (window.matchMedia('(prefers-reduced-motion: reduce)').matches){
+    marks.forEach(function(m){ m.classList.add('on'); });
+  } else {
+    var hlIO = new IntersectionObserver(function(entries){
+      entries.forEach(function(en){
+        if (en.isIntersecting){
+          en.target.classList.add('on');
+        } else if (en.boundingClientRect.top > 0){
+          /* 요소가 뷰포트 아래쪽에 있음 = 스크롤을 올려 벗어난 상태 → 형광펜 제거 */
+          en.target.classList.remove('on');
+        }
+      });
+    }, { threshold: 0.55, rootMargin: '0px 0px -8% 0px' });
+    marks.forEach(function(m){ hlIO.observe(m); });
+  }
 
   /* 장비 더보기 */
   var eqPlus = document.getElementById('eq-plus');
