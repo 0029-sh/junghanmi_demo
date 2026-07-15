@@ -738,44 +738,40 @@ footer{ background:var(--cream); }
           <a class="sec-link" href="https://www.youtube.com/@pibutenten" target="_blank" rel="noopener">채널 보기 <span class="arr" aria-hidden="true">→</span></a>
         </div>
 
-        <!-- ✏️ 영상 설정: data-id="" 에 유튜브 영상 ID 입력 (예: youtube.com/watch?v=abc123 → abc123)
-             · 비워두면 클릭 시 피부텐텐 채널이 새 창으로 열립니다.
-             · 인스타 릴스로 쓰려면: data-kind="reel" data-url="릴스 주소" 로 교체 (클릭 시 새 창) -->
+        <!-- 영상 연결 완료 ✓ 유튜브 2편: 클릭 시 팝업 재생(data-id) / 쇼츠 3편: 인스타그램 릴스 새 창(data-url). 영상 교체 시 해당 값만 변경 -->
         <div class="yt-grid">
           <div>
-            <button type="button" class="vcard" data-kind="youtube" data-id="">
+            <button type="button" class="vcard" data-kind="youtube" data-id="WT7Qt_NHKZ8">
               <div class="imgbox" data-file="images/videos/yt-01.jpg">
-                <img src="images/videos/yt-01.jpg" alt="유튜브 영상 1" loading="lazy" onerror="ph(this)">
+                <img src="images/videos/yt-01.jpg" alt="정한미 원장 유튜브 영상 1" loading="lazy" onerror="ph(this)">
               </div>
               <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
             </button>
-            <p class="vcap">영상 제목이 들어갑니다 (예시)</p>
           </div>
           <div>
-            <button type="button" class="vcard" data-kind="youtube" data-id="">
+            <button type="button" class="vcard" data-kind="youtube" data-id="3WfzJZJLX2k">
               <div class="imgbox" data-file="images/videos/yt-02.jpg">
-                <img src="images/videos/yt-02.jpg" alt="유튜브 영상 2" loading="lazy" onerror="ph(this)">
+                <img src="images/videos/yt-02.jpg" alt="정한미 원장 유튜브 영상 2" loading="lazy" onerror="ph(this)">
               </div>
               <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
             </button>
-            <p class="vcap">영상 제목이 들어갑니다 (예시)</p>
           </div>
         </div>
 
         <div class="shorts-grid">
-          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 1">
+          <button type="button" class="vcard" data-kind="reel" data-url="https://www.instagram.com/reel/DaO3yFrO-dw/" aria-label="인스타그램 릴스 1">
             <div class="imgbox" data-file="images/videos/shorts-01.jpg">
               <img src="images/videos/shorts-01.jpg" alt="" loading="lazy" onerror="ph(this)">
             </div>
             <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
           </button>
-          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 2">
+          <button type="button" class="vcard" data-kind="reel" data-url="https://www.instagram.com/reel/DZrqkjnOheH/" aria-label="인스타그램 릴스 2">
             <div class="imgbox" data-file="images/videos/shorts-02.jpg">
               <img src="images/videos/shorts-02.jpg" alt="" loading="lazy" onerror="ph(this)">
             </div>
             <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
           </button>
-          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 3">
+          <button type="button" class="vcard" data-kind="reel" data-url="https://www.instagram.com/reel/DaPjkvtxx7e/" aria-label="인스타그램 릴스 3">
             <div class="imgbox" data-file="images/videos/shorts-03.jpg">
               <img src="images/videos/shorts-03.jpg" alt="" loading="lazy" onerror="ph(this)">
             </div>
