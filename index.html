@@ -141,21 +141,26 @@ button{ font-family:inherit; }
   position:absolute; inset:0; width:100%; height:100%;
   object-fit:cover; object-position:top;
 }
-.hh-xf{ opacity:0; animation:17.5s ease-in-out infinite; }
+.hh-xf{ opacity:0; animation:14s ease-in-out infinite; }
 .hh-xf-1{ animation-name:hh-xf-1; } .hh-xf-2{ animation-name:hh-xf-2; }
-.hh-xf-3{ animation-name:hh-xf-3; } .hh-xf-4{ animation-name:hh-xf-4; }
-@keyframes hh-xf-1{ 0%,20%{opacity:0} 24.8%,95.2%{opacity:1} to{opacity:0} }
-@keyframes hh-xf-2{ 0%,40%{opacity:0} 44.8%,95.2%{opacity:1} to{opacity:0} }
-@keyframes hh-xf-3{ 0%,60%{opacity:0} 64.8%,95.2%{opacity:1} to{opacity:0} }
-@keyframes hh-xf-4{ 0%,80%{opacity:0} 84.8%,95.2%{opacity:1} to{opacity:0} }
+.hh-xf-3{ animation-name:hh-xf-3; }
+@keyframes hh-xf-1{ 0%,25%{opacity:0} 29.8%,95.2%{opacity:1} to{opacity:0} }
+@keyframes hh-xf-2{ 0%,50%{opacity:0} 54.8%,95.2%{opacity:1} to{opacity:0} }
+@keyframes hh-xf-3{ 0%,75%{opacity:0} 79.8%,95.2%{opacity:1} to{opacity:0} }
 @media (prefers-reduced-motion:reduce){ .hh-xf{ animation:none; } }
 .hero figcaption{ margin-top:0.5rem; }
 
-.catch-block{ margin-top:0.5rem; }
-@media (min-width:1024px){ .catch-block{ margin-top:7rem; max-width:27rem; } }
+.catch-block{ margin-top:0; }
+@media (min-width:1024px){ .catch-block{ order:-1; margin-top:7rem; max-width:27rem; } }
+.hero-divider{
+  width:100%; border:0; border-top:1px solid var(--hairline);
+  margin:1.5rem 0 1.25rem;
+}
+@media (min-width:1024px){ .hero-divider{ display:none; } }
 .hello{
-  font-size:1.0625rem; color:var(--charcoal); letter-spacing:0.01em;
-  font-weight:500; margin:0;
+  font-family:var(--serif); font-weight:600; color:var(--ink);
+  font-size:clamp(1.3125rem, 2.8vw, 1.625rem); line-height:1.72;
+  margin:0;
 }
 .who-row{ display:flex; align-items:center; gap:0.875rem; }
 @media (min-width:1024px){ .who-row{ justify-content:flex-end; } }
@@ -171,9 +176,9 @@ button{ font-family:inherit; }
 .catch{
   font-family:var(--serif); font-weight:600;
   font-size:clamp(1.3125rem, 2.8vw, 1.625rem); line-height:1.72;
-  margin:0.875rem 0 0;
+  margin:0.45rem 0 0;
 }
-.who{ margin-top:2.25rem; }
+.who{ margin-top:0; }
 @media (min-width:1024px){ .who{ margin-top:auto; padding-top:2.5rem; text-align:right; align-self:flex-end; } }
 .who h1{ font-family:var(--serif); font-size:1.75rem; font-weight:500; margin:0; }
 @media (min-width:1024px){ .who h1{ font-size:2rem; } }
@@ -239,20 +244,15 @@ button{ font-family:inherit; }
 .sig-view{ overflow:hidden; border-radius:var(--r); }
 .sig-track{ display:flex; transition:transform 0.55s var(--ease); }
 .sig-slide{ flex:0 0 100%; margin:0; min-width:0; }
-.sig-pair{ display:grid; grid-template-columns:1fr 1fr; gap:2px; }
-.sig-pair .imgbox{ aspect-ratio:3/4; }
-.sig-tag{
-  position:absolute; top:0.6rem; left:0.6rem; z-index:3;
-  font-size:0.625rem; letter-spacing:0.14em; text-transform:uppercase;
-  color:#fff; background:rgba(15,15,15,0.55);
-  border-radius:999px; padding:0.24rem 0.6rem;
+.sig-slide .imgbox{ aspect-ratio:var(--sig-ar, 3 / 2); }
+.sig-empty{
+  aspect-ratio:3/2; background:var(--cream); border-radius:var(--r);
+  display:grid; place-items:center; text-align:center; padding:1.5rem;
+  font-size:0.9375rem; color:var(--stone); line-height:2;
 }
-.sig-slide figcaption{
-  padding:0.6rem 0.25rem 0; text-align:center;
-  font-size:0.8125rem; color:var(--stone);
-}
+.sig-empty span{ font-size:0.75rem; color:var(--mist); }
 .sig-nav{
-  position:absolute; top:45%; transform:translateY(-50%); z-index:4;
+  position:absolute; top:50%; transform:translateY(-50%); z-index:4;
   width:2.5rem; height:2.5rem; border-radius:999px; cursor:pointer;
   border:1px solid rgba(255,255,255,0.65); background:rgba(15,15,15,0.45); color:#fff;
   display:grid; place-items:center; font-size:1rem;
@@ -518,10 +518,6 @@ footer{ background:var(--cream); }
   <!-- ═══════════ 프로필 히어로 + 캐치프레이즈 ═══════════ -->
   <section class="wrapper hero" id="message" aria-label="인사말">
     <div class="hero-text">
-      <div class="catch-block">
-        <p class="hello">“안녕하세요, 정한미입니다”</p>
-        <p class="catch">한 번의 시술로 잊히는 의사가 아니라,<br>얼굴을 오래 맡길 수 있는 의사가 되겠습니다.</p>
-      </div>
       <div class="who">
         <div class="who-row">
           <h1>정한미</h1>
@@ -539,19 +535,23 @@ footer{ background:var(--cream); }
         </div>
         <p>피부과 전문의 · 강남점</p>
       </div>
+      <hr class="hero-divider">
+      <div class="catch-block">
+        <p class="hello">안녕하세요, 정한미입니다</p>
+        <p class="catch">한 번의 시술로 잊히는 의사가 아니라,<br>얼굴을 오래 맡길 수 있는 의사가 되겠습니다.</p>
+      </div>
     </div>
     <figure>
       <div class="xfade">
-        <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 피부과 전문의" loading="eager"
+        <!-- ✏️ 원장 프로필 사진: images/doctors/ 에 jung-hanmi-01.jpg ~ jung-hanmi-04.jpg 4장 업로드 (자동 교차) -->
+        <img src="images/doctors/jung-hanmi-01.jpg" alt="정한미 피부과 전문의" loading="eager"
              onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
-        <img src="images/doctors/jung-hanmi-gown2.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-1" loading="lazy"
+        <img src="images/doctors/jung-hanmi-02.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-1" loading="lazy"
              onerror="fb(this,'/images/doctors/jung-hanmi-gown2.jpg')">
-        <img src="images/doctors/jung-hanmi-scrub.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-2" loading="lazy"
+        <img src="images/doctors/jung-hanmi-03.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-2" loading="lazy"
              onerror="fb(this,'/images/doctors/jung-hanmi-scrub.jpg')">
-        <img src="images/doctors/jung-hanmi-casual.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-3" loading="lazy"
+        <img src="images/doctors/jung-hanmi-04.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-3" loading="lazy"
              onerror="fb(this,'/images/doctors/jung-hanmi-casual.jpg')">
-        <img src="images/doctors/jung-hanmi-suit.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-4" loading="lazy"
-             onerror="fb(this,'/images/doctors/jung-hanmi-suit.jpg')">
       </div>
       <figcaption><span class="label-caps">Heal House</span></figcaption>
     </figure>
@@ -582,29 +582,14 @@ footer{ background:var(--cream); }
           <a class="sec-link" href="https://newhealhouse.vercel.app/signatures/" target="_blank" rel="noopener">작·우·빛 얼굴 만들기 <span class="arr" aria-hidden="true">→</span></a>
         </div>
 
-        <!-- ✏️ 전후사진 세트 추가 방법: <figure class="sig-slide"> 블록을 복사해 파일명 숫자만 변경 (small-03, small-04 …) -->
+        <!-- ✏️ 전후사진: 전(前)·후(後)가 한 장에 합쳐진 이미지를 images/signature/ 에
+             small-01.jpg, small-02.jpg … 처럼 번호 순서로 올리면 자동으로 슬라이드가 생성됩니다.
+             (jpg / png 모두 인식, 카테고리당 최대 12장, 코드 수정 불필요) -->
         <div class="sig-block">
           <h3>작은 얼굴 만들기</h3>
           <p class="desc">윤곽을 섬세하게 다듬어 한층 작고 깔끔한 얼굴로</p>
-          <div class="sig-slider">
-            <div class="sig-view">
-              <div class="sig-track">
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/small-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/small-01-before.jpg" alt="작은 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/small-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/small-01-after.jpg" alt="작은 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/small-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/small-02-before.jpg" alt="작은 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/small-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/small-02-after.jpg" alt="작은 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-              </div>
-            </div>
+          <div class="sig-slider" data-prefix="images/signature/small-" data-label="작은 얼굴 만들기">
+            <div class="sig-view"><div class="sig-track"></div></div>
             <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
             <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
             <span class="sig-cnt" aria-live="polite"></span>
@@ -614,25 +599,8 @@ footer{ background:var(--cream); }
         <div class="sig-block">
           <h3>우아한 얼굴 만들기</h3>
           <p class="desc">부드러운 곡선을 되찾아 한층 입체적인 얼굴로</p>
-          <div class="sig-slider">
-            <div class="sig-view">
-              <div class="sig-track">
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/elegant-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/elegant-01-before.jpg" alt="우아한 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/elegant-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/elegant-01-after.jpg" alt="우아한 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/elegant-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/elegant-02-before.jpg" alt="우아한 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/elegant-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/elegant-02-after.jpg" alt="우아한 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-              </div>
-            </div>
+          <div class="sig-slider" data-prefix="images/signature/elegant-" data-label="우아한 얼굴 만들기">
+            <div class="sig-view"><div class="sig-track"></div></div>
             <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
             <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
             <span class="sig-cnt" aria-live="polite"></span>
@@ -642,25 +610,8 @@ footer{ background:var(--cream); }
         <div class="sig-block">
           <h3>빛나는 얼굴 만들기</h3>
           <p class="desc">피부 속부터 촘촘하게 채워 한층 생기있는 얼굴로</p>
-          <div class="sig-slider">
-            <div class="sig-view">
-              <div class="sig-track">
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/glow-01-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/glow-01-before.jpg" alt="빛나는 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/glow-01-after.jpg"><span class="sig-tag">After</span><img src="images/signature/glow-01-after.jpg" alt="빛나는 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-                <figure class="sig-slide">
-                  <div class="sig-pair">
-                    <div class="imgbox" data-file="images/signature/glow-02-before.jpg"><span class="sig-tag">Before</span><img src="images/signature/glow-02-before.jpg" alt="빛나는 얼굴 만들기 시술 전" loading="lazy" onerror="ph(this)"></div>
-                    <div class="imgbox" data-file="images/signature/glow-02-after.jpg"><span class="sig-tag">After</span><img src="images/signature/glow-02-after.jpg" alt="빛나는 얼굴 만들기 시술 후" loading="lazy" onerror="ph(this)"></div>
-                  </div>
-                  <figcaption>시술명 · 경과 시점 표기 영역</figcaption>
-                </figure>
-              </div>
-            </div>
+          <div class="sig-slider" data-prefix="images/signature/glow-" data-label="빛나는 얼굴 만들기">
+            <div class="sig-view"><div class="sig-track"></div></div>
             <button type="button" class="sig-nav sig-prev" aria-label="이전 사진">←</button>
             <button type="button" class="sig-nav sig-next" aria-label="다음 사진">→</button>
             <span class="sig-cnt" aria-live="polite"></span>
@@ -903,28 +854,28 @@ footer{ background:var(--cream); }
           <article class="ccard">
             <h3><a href="https://newhealhouse.vercel.app/columns/personalized-facial-design/" target="_blank" rel="noopener">같은 시술을 받아도 결과가 다른 이유는? 얼굴에 맞춘 1:1 디자인의 차이</a></h3>
             <div class="byline">
-              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <img src="images/doctors/jung-hanmi-01.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
               <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
             </div>
           </article>
           <article class="ccard">
             <h3><a href="https://newhealhouse.vercel.app/columns/juvgen-nasolabial-folds/" target="_blank" rel="noopener">필러는 소용없나요? 팔자주름에 효과적인 시술 추천</a></h3>
             <div class="byline">
-              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <img src="images/doctors/jung-hanmi-01.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
               <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
             </div>
           </article>
           <article class="ccard">
             <h3><a href="https://newhealhouse.vercel.app/columns/the-l-injection-face-slimming/" target="_blank" rel="noopener">수술없이 얼굴 작아지는 방법 없나요?</a></h3>
             <div class="byline">
-              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <img src="images/doctors/jung-hanmi-01.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
               <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
             </div>
           </article>
           <article class="ccard">
             <h3><a href="https://newhealhouse.vercel.app/columns/sculptra-peanut-shaped-face/" target="_blank" rel="noopener">땅콩형얼굴인데, 뭐가 가장 효과 좋을까요?</a></h3>
             <div class="byline">
-              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <img src="images/doctors/jung-hanmi-01.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
               <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
             </div>
           </article>
@@ -1041,10 +992,9 @@ footer{ background:var(--cream); }
     marks.forEach(function(m){ hlIO.observe(m); });
   }
 
-  /* 시그니처 전후 슬라이더: 좌우 버튼 + 스와이프, 순환 */
-  document.querySelectorAll('.sig-slider').forEach(function(sl){
+  /* 시그니처 전후 슬라이더: images/signature/ 의 번호 파일(01, 02…)을 자동 탐색해 슬라이드 생성 */
+  function sigInit(sl, n){
     var track = sl.querySelector('.sig-track'),
-        n = track.children.length,
         cnt = sl.querySelector('.sig-cnt'),
         prev = sl.querySelector('.sig-prev'),
         next = sl.querySelector('.sig-next'),
@@ -1071,6 +1021,40 @@ footer{ background:var(--cream); }
       }, { passive:true });
     }
     go(0);
+  }
+  document.querySelectorAll('.sig-slider').forEach(function(sl){
+    var prefix = sl.dataset.prefix,
+        label = sl.dataset.label || '시그니처 시술',
+        track = sl.querySelector('.sig-track'),
+        MAX = 12, jobs = [];
+    function probe(src){
+      return new Promise(function(res){
+        var im = new Image();
+        im.onload = function(){ res({ src:src, w:im.naturalWidth, h:im.naturalHeight }); };
+        im.onerror = function(){ res(null); };
+        im.src = src;
+      });
+    }
+    for (var k = 1; k <= MAX; k++){
+      (function(n){
+        var num = (n < 10 ? '0' : '') + n;
+        jobs.push(probe(prefix + num + '.jpg').then(function(r){ return r || probe(prefix + num + '.png'); }));
+      })(k);
+    }
+    Promise.all(jobs).then(function(list){
+      var ok = list.filter(Boolean);
+      if (!ok.length){
+        track.innerHTML = '<div class="sig-slide"><div class="sig-empty">전후사진 업로드 대기 중<br>' +
+          '<span>' + prefix + '01.jpg 부터 번호 순서로 올리면 자동으로 표시됩니다</span></div></div>';
+        sigInit(sl, 1);
+        return;
+      }
+      if (ok[0].w && ok[0].h) sl.style.setProperty('--sig-ar', ok[0].w + ' / ' + ok[0].h);
+      track.innerHTML = ok.map(function(o){
+        return '<figure class="sig-slide"><div class="imgbox"><img src="' + o.src + '" alt="' + label + ' 시술 전후 사진" loading="lazy"></div></figure>';
+      }).join('');
+      sigInit(sl, ok.length);
+    });
   });
 
   /* 장비 더보기 */
