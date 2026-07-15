@@ -1,0 +1,913 @@
+<!DOCTYPE html>
+<html lang="ko">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<meta name="robots" content="noindex, nofollow">
+<meta name="theme-color" content="#faf9f7">
+<title>정한미 원장 페이지 개편안 (검토용 시안) | 힐하우스피부과</title>
+<meta name="description" content="정한미 원장 의료진 페이지 개편 방향 검토용 데모입니다. 실제 서비스 페이지가 아닙니다.">
+
+<link rel="preconnect" href="https://cdn.jsdelivr.net" crossorigin>
+<link rel="stylesheet" href="https://cdn.jsdelivr.net/gh/orioncactus/pretendard@v1.3.9/dist/web/variable/pretendardvariable-dynamic-subset.min.css">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link rel="stylesheet" href="https://fonts.googleapis.com/css2?family=Noto+Serif+KR:wght@400;500;600;700&display=swap">
+
+<!--
+  ══════════════════════════════════════════════════════════════
+  정한미 원장 의료진 페이지 — 구조 개편안 데모
+  · 이미지: /images/ 하위 상대경로 사용. 파일이 아직 없으면
+    기존 데모 사이트(newhealhouse.vercel.app)의 동일 파일로 자동 대체됨.
+    (신규 섹션 이미지는 대체본이 없어 파일명 안내 박스가 표시됨)
+  · ✏️ 표시된 주석 = 문구/영상 ID 교체 지점
+  ══════════════════════════════════════════════════════════════
+-->
+
+<script>
+  // 이미지 폴백: 로컬 파일이 없으면 기존 사이트 동일 경로에서 로드
+  function fb(img, path){
+    if(img.dataset.fbDone){ img.style.display='none'; return; }
+    img.dataset.fbDone = '1';
+    img.src = 'https://newhealhouse.vercel.app' + path;
+  }
+  // 신규 이미지(대체본 없음): 숨기고 파일명 안내 박스 노출
+  function ph(img){ img.style.display='none'; }
+</script>
+
+<script type="application/ld+json">
+{
+  "@context": "https://schema.org",
+  "@type": "Physician",
+  "name": "정한미",
+  "jobTitle": "피부과 전문의",
+  "medicalSpecialty": "Dermatology",
+  "alumniOf": { "@type": "CollegeOrUniversity", "name": "가톨릭대학교 의과대학" },
+  "memberOf": [
+    { "@type": "Organization", "name": "대한피부과학회" },
+    { "@type": "Organization", "name": "대한아토피피부염학회" },
+    { "@type": "Organization", "name": "대한건선학회" },
+    { "@type": "Organization", "name": "대한모발학회" },
+    { "@type": "Organization", "name": "대한미용외과학회" },
+    { "@type": "Organization", "name": "대한여드름학회" }
+  ],
+  "author": { "@type": "Book", "name": "작고 우아한 빛나는 얼굴 만들기" },
+  "worksFor": {
+    "@type": "MedicalClinic",
+    "name": "힐하우스피부과 강남점",
+    "address": "서울 강남구 강남대로 518, 4·5층",
+    "telephone": "02-6951-5761"
+  },
+  "sameAs": [
+    "https://www.youtube.com/@pibutenten",
+    "https://www.instagram.com/pibutenten/"
+  ]
+}
+</script>
+
+<style>
+/* ── 디자인 토큰 (기존 사이트 재현) ─────────────────────── */
+:root{
+  --paper:#faf9f7; --white:#ffffff; --cream:#f2efe9;
+  --hairline:#e5e2dd; --ink:#131313; --charcoal:#3f3c38;
+  --stone:#8a8580; --mist:#b8b3ac; --sky-deep:#3f6c93;
+  --serif:'Noto Serif KR', Georgia, serif;
+  --sans:'Pretendard Variable', Pretendard, -apple-system, 'Noto Sans KR', sans-serif;
+  --r:0.75rem;
+  --ease:cubic-bezier(0.22,1,0.36,1);
+}
+*,*::before,*::after{ box-sizing:border-box; }
+html{ scroll-behavior:smooth; }
+body{
+  margin:0; background:var(--paper); color:var(--ink);
+  font-family:var(--sans); font-size:16px; line-height:1.6;
+  -webkit-font-smoothing:antialiased; word-break:keep-all;
+}
+img{ display:block; }
+a{ color:inherit; text-decoration:none; }
+button{ font-family:inherit; }
+.wrapper{ max-width:76rem; margin:0 auto; padding-inline:clamp(1.25rem,4vw,2.5rem); }
+.label-caps{
+  font-size:0.6875rem; letter-spacing:0.16em; text-transform:uppercase;
+  color:var(--stone); font-weight:500;
+}
+
+/* ── 데모 안내 바 ───────────────────────────────────────── */
+.demo-bar{
+  background:var(--ink); color:var(--paper); text-align:center;
+  font-size:0.75rem; letter-spacing:0.06em; padding:0.5rem 1rem;
+}
+.demo-bar b{ font-weight:600; }
+
+/* ── 헤더 ──────────────────────────────────────────────── */
+.site-header{
+  position:sticky; top:0; z-index:40;
+  background:rgba(250,249,247,0.94); backdrop-filter:blur(8px);
+  border-bottom:1px solid var(--hairline);
+}
+.header-inner{ display:flex; align-items:center; justify-content:space-between; gap:1.5rem; height:4rem; }
+.header-inner .brand img{ height:2.25rem; width:auto; }
+.gnb{ display:none; }
+@media (min-width:1024px){
+  .gnb{ display:flex; gap:1.75rem; align-items:center; list-style:none; margin:0; padding:0; }
+  .gnb a{ font-size:0.875rem; letter-spacing:0.02em; color:var(--stone); transition:color .2s; }
+  .gnb a:hover{ color:var(--ink); }
+  .gnb a[aria-current]{ color:var(--ink); text-decoration:underline; text-underline-offset:8px; text-decoration-thickness:1px; }
+}
+.btn-line{
+  display:inline-flex; align-items:center; gap:0.4rem;
+  border:1px solid var(--ink); border-radius:999px;
+  padding:0.5rem 1.05rem; font-size:0.8125rem; letter-spacing:0.02em;
+  transition:background .2s, color .2s; white-space:nowrap;
+}
+.btn-line:hover{ background:var(--ink); color:var(--paper); }
+
+/* ── 히어로 ─────────────────────────────────────────────── */
+.hero{ display:grid; gap:1.75rem; margin-top:1.25rem; }
+@media (min-width:1024px){
+  .hero{ grid-template-columns:repeat(12,1fr); gap:2.5rem; align-items:stretch; }
+  .hero figure{ grid-column:7 / 13; }
+  .hero .hero-text{ grid-column:1 / 7; grid-row:1; display:flex; flex-direction:column; padding-bottom:2rem; }
+}
+.hero figure{ margin:0; order:-1; }
+@media (min-width:1024px){ .hero figure{ order:0; } }
+.xfade{
+  position:relative; aspect-ratio:3/4; overflow:hidden;
+  border-radius:var(--r); background:var(--cream);
+}
+@media (min-width:640px){ .xfade{ aspect-ratio:4/5; } }
+.xfade img{
+  position:absolute; inset:0; width:100%; height:100%;
+  object-fit:cover; object-position:top;
+}
+.hh-xf{ opacity:0; animation:17.5s ease-in-out infinite; }
+.hh-xf-1{ animation-name:hh-xf-1; } .hh-xf-2{ animation-name:hh-xf-2; }
+.hh-xf-3{ animation-name:hh-xf-3; } .hh-xf-4{ animation-name:hh-xf-4; }
+@keyframes hh-xf-1{ 0%,20%{opacity:0} 24.8%,95.2%{opacity:1} to{opacity:0} }
+@keyframes hh-xf-2{ 0%,40%{opacity:0} 44.8%,95.2%{opacity:1} to{opacity:0} }
+@keyframes hh-xf-3{ 0%,60%{opacity:0} 64.8%,95.2%{opacity:1} to{opacity:0} }
+@keyframes hh-xf-4{ 0%,80%{opacity:0} 84.8%,95.2%{opacity:1} to{opacity:0} }
+@media (prefers-reduced-motion:reduce){ .hh-xf{ animation:none; } }
+.hero figcaption{ margin-top:0.5rem; }
+
+.catch-block{ margin-top:0.5rem; }
+@media (min-width:1024px){ .catch-block{ margin-top:7rem; max-width:27rem; } }
+.hello{
+  font-size:0.875rem; color:var(--stone); letter-spacing:0.02em; margin:0;
+}
+.catch{
+  font-family:var(--serif); font-weight:600;
+  font-size:clamp(1.3125rem, 2.8vw, 1.625rem); line-height:1.72;
+  margin:0.875rem 0 0;
+}
+.who{ margin-top:2.25rem; }
+@media (min-width:1024px){ .who{ margin-top:auto; padding-top:2.5rem; text-align:right; align-self:flex-end; } }
+.who h1{ font-family:var(--serif); font-size:1.75rem; font-weight:500; margin:0; }
+@media (min-width:1024px){ .who h1{ font-size:2rem; } }
+.who p{ margin:0.625rem 0 0; font-size:0.9375rem; color:var(--stone); }
+
+/* ── 본문 레이아웃 ──────────────────────────────────────── */
+.layout{ margin-top:3rem; padding-bottom:4rem; }
+@media (min-width:1024px){
+  .layout{ display:grid; grid-template-columns:minmax(0,46.25rem) 1fr; gap:4rem; margin-top:4rem; }
+}
+.flow{ display:flex; flex-direction:column; gap:3.25rem; }
+@media (min-width:1024px){ .flow{ gap:3.75rem; } }
+
+/* ── 섹션 공통 ──────────────────────────────────────────── */
+.sec{ border-top:1px solid var(--ink); padding-top:0.875rem; scroll-margin-top:5.75rem; }
+.sec-head{ display:flex; align-items:flex-start; justify-content:space-between; gap:1.5rem; }
+.sec-title{
+  font-family:var(--serif); font-weight:600; color:var(--ink);
+  font-size:1.375rem; line-height:1.4; margin:0.375rem 0 0;
+}
+.sec-sub{
+  margin:0.75rem 0 0; font-size:0.9375rem; line-height:1.8;
+  color:var(--charcoal); max-width:36rem;
+}
+.sec-link{
+  display:inline-flex; align-items:center; gap:0.5rem; flex:none;
+  min-height:2.75rem; font-size:0.8125rem; letter-spacing:0.04em;
+  color:var(--charcoal); transition:color .2s;
+}
+.sec-link:hover{ color:var(--ink); }
+.sec-link .arr{ transition:transform .3s var(--ease); }
+.sec-link:hover .arr{ transform:translateX(4px); }
+.demo-note{ margin:0.75rem 0 0; font-size:0.75rem; color:var(--mist); }
+
+/* ── 진료 철학 ──────────────────────────────────────────── */
+.phil-quote{
+  font-family:var(--serif); font-weight:600;
+  font-size:1.1875rem; line-height:1.8; color:var(--ink);
+  margin:1.5rem 0 0; max-width:40rem;
+}
+.phil p{
+  margin:1.25rem 0 0; max-width:42rem;
+  font-size:1rem; line-height:1.95; color:var(--charcoal);
+}
+.phil p strong{ color:var(--ink); font-weight:600; }
+
+/* ── 경력·학력·학술 ─────────────────────────────────────── */
+.profile-grid{ display:grid; gap:1.75rem 2.5rem; margin-top:1.5rem; }
+@media (min-width:768px){ .profile-grid{ grid-template-columns:1fr 1fr; } }
+.profile-grid h3{ display:flex; align-items:baseline; gap:0.625rem; margin:0; }
+.profile-grid h3 .ko{ font-family:var(--serif); font-size:1rem; font-weight:600; }
+.profile-grid ul{ list-style:none; margin:0.75rem 0 0; padding:0; border-top:1px solid var(--ink); }
+.profile-grid li{
+  border-bottom:1px solid var(--hairline); padding:0.55rem 0;
+  font-size:0.875rem; line-height:1.65; color:var(--charcoal);
+}
+
+/* ── 외부 활동: 갤러리/리스트 토글 ──────────────────────── */
+.vt{
+  display:inline-flex; border:1px solid var(--hairline); border-radius:999px;
+  padding:2px; background:var(--white); flex:none;
+}
+.vt button{
+  border:0; background:none; cursor:pointer; border-radius:999px;
+  font-size:0.8125rem; padding:0.4rem 0.95rem; color:var(--stone);
+  transition:background .2s, color .2s;
+}
+.vt button[aria-pressed="true"]{ background:var(--ink); color:var(--paper); }
+
+.imgbox{ position:relative; background:var(--cream); overflow:hidden; }
+.imgbox::after{
+  content:attr(data-file);
+  position:absolute; inset:0; display:grid; place-items:center;
+  padding:1rem; text-align:center;
+  font-size:0.75rem; letter-spacing:0.02em; color:var(--mist);
+}
+.imgbox img{
+  position:relative; z-index:1; width:100%; height:100%; object-fit:cover;
+  transition:transform .5s var(--ease);
+}
+
+.act-grid{ display:grid; gap:1rem; margin-top:1.5rem; }
+@media (min-width:640px){ .act-grid{ grid-template-columns:1fr 1fr; } }
+.act-card{
+  background:var(--white); border:1px solid var(--hairline); border-radius:var(--r);
+  overflow:hidden; display:flex; flex-direction:column;
+  transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.act-card:hover{ transform:translateY(-2px); border-color:rgba(63,108,147,0.45); box-shadow:0 6px 18px rgba(19,19,19,0.05); }
+.act-card .imgbox{ aspect-ratio:16/10; }
+.act-card:hover .imgbox img{ transform:scale(1.03); }
+.act-body{ padding:1.1rem 1.15rem 1.2rem; display:flex; flex-direction:column; flex:1; }
+.chip{
+  display:inline-block; align-self:flex-start;
+  font-size:0.6875rem; letter-spacing:0.08em; color:var(--stone);
+  border:1px solid var(--hairline); border-radius:999px; padding:0.2rem 0.6rem;
+}
+.act-title{
+  font-family:var(--serif); font-size:1.0625rem; font-weight:600;
+  line-height:1.55; margin:0.65rem 0 0;
+}
+.act-line{ margin:0.4rem 0 0; font-size:0.8125rem; line-height:1.7; color:var(--stone); }
+.act-date{ margin-top:auto; padding-top:0.7rem; font-size:0.75rem; color:var(--mist); }
+
+.act-list{ display:none; margin-top:1.5rem; border-top:1px solid var(--ink); }
+.act-row{
+  display:flex; flex-wrap:wrap; align-items:baseline; gap:0.5rem 0.875rem;
+  padding:0.875rem 0; border-bottom:1px solid var(--hairline);
+}
+.act-row .chip{ align-self:baseline; }
+.act-row .t{ font-size:0.9375rem; font-weight:500; line-height:1.6; }
+.act-row time{ margin-left:auto; font-size:0.75rem; color:var(--mist); white-space:nowrap; }
+#activities[data-view="list"] .act-grid{ display:none; }
+#activities[data-view="list"] .act-list{ display:block; }
+
+/* ── 영상 (피부텐텐) ────────────────────────────────────── */
+.yt-grid{ display:grid; gap:1rem; margin-top:1.5rem; }
+@media (min-width:640px){ .yt-grid{ grid-template-columns:1fr 1fr; } }
+.vcard{
+  position:relative; display:block; width:100%; padding:0; border:0;
+  background:none; cursor:pointer; text-align:left;
+}
+.vcard .imgbox{ border-radius:var(--r); }
+.vcard:hover .imgbox img{ transform:scale(1.03); }
+.yt-grid .imgbox{ aspect-ratio:16/9; }
+.play{
+  position:absolute; inset:0; z-index:2; display:grid; place-items:center;
+}
+.play span{
+  width:3rem; height:3rem; border-radius:999px;
+  background:rgba(15,15,15,0.55); border:1px solid rgba(255,255,255,0.65);
+  display:grid; place-items:center; transition:background .2s;
+}
+.vcard:hover .play span{ background:rgba(15,15,15,0.75); }
+.play svg{ width:1rem; height:1rem; fill:#fff; margin-left:2px; }
+.vcap{ margin:0.6rem 0.15rem 0; font-size:0.8125rem; line-height:1.6; color:var(--charcoal); }
+.shorts-grid{ display:grid; grid-template-columns:repeat(3,1fr); gap:0.75rem; margin-top:1rem; }
+@media (min-width:640px){ .shorts-grid{ gap:1rem; } }
+.shorts-grid .imgbox{ aspect-ratio:9/16; }
+.shorts-grid .play span{ width:2.5rem; height:2.5rem; }
+
+/* ── 공간 / 장비 그리드 ─────────────────────────────────── */
+.space-cap{ margin:1.25rem 0 0; font-size:0.75rem; letter-spacing:0.12em; color:var(--stone); }
+.tile-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:0.5rem; margin-top:0.75rem; }
+@media (min-width:768px){ .tile-grid{ grid-template-columns:repeat(4,1fr); } }
+.tile{
+  aspect-ratio:1/1; border:0; padding:0; cursor:pointer;
+  border-radius:var(--r); overflow:hidden; background:var(--cream);
+}
+.tile .imgbox{ width:100%; height:100%; }
+.tile:hover .imgbox img{ transform:scale(1.03); }
+
+.eq-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:0.5rem; row-gap:1rem; margin-top:1.5rem; }
+@media (min-width:768px){ .eq-grid{ grid-template-columns:repeat(4,1fr); } }
+.eq{ position:relative; }
+.eq .pad{
+  aspect-ratio:1/1; border-radius:var(--r); background:var(--cream);
+  display:flex; align-items:center; justify-content:center; padding:1rem; overflow:hidden;
+}
+.eq img{ max-height:100%; max-width:100%; width:auto; object-fit:contain; transition:transform .5s var(--ease); }
+.eq:hover img{ transform:scale(1.04); }
+.eq h3{ margin:0.55rem 0 0; text-align:center; font-size:0.875rem; font-weight:500; line-height:1.45; }
+.eq.more{ display:none; }
+.eq-grid.open .eq.more{ display:block; }
+.plus{
+  aspect-ratio:1/1; border:0; cursor:pointer; border-radius:var(--r);
+  background:var(--cream); color:var(--mist); align-self:start;
+  display:grid; place-items:center; transition:color .2s;
+}
+.plus:hover{ color:var(--ink); }
+.plus span{ font-family:var(--serif); font-size:3rem; font-weight:300; line-height:1; }
+
+/* ── 칼럼 ──────────────────────────────────────────────── */
+.col-grid{ display:grid; gap:1.25rem 1.5rem; margin-top:1.5rem; }
+@media (min-width:768px){ .col-grid{ grid-template-columns:1fr 1fr; } }
+.ccard{
+  display:flex; flex-direction:column; height:100%;
+  background:var(--white); border:1px solid var(--hairline); border-radius:var(--r);
+  padding:1.25rem; transition:transform .3s var(--ease), box-shadow .3s var(--ease), border-color .3s;
+}
+.ccard:hover{ transform:translateY(-2px); border-color:rgba(63,108,147,0.45); box-shadow:0 6px 18px rgba(19,19,19,0.05); }
+.ccard h3{
+  font-family:var(--serif); font-size:1.0625rem; font-weight:600;
+  line-height:1.6; margin:0;
+}
+.byline{ margin-top:auto; padding-top:1.25rem; display:flex; align-items:center; gap:0.625rem; }
+.byline img{
+  width:28px; height:28px; border-radius:999px; object-fit:cover; object-position:top;
+  background:var(--cream); border:1px solid var(--hairline); flex:none;
+}
+.byline .nm{ font-size:0.8125rem; font-weight:600; line-height:1.35; }
+.byline .mt{ display:block; font-size:0.75rem; color:var(--stone); font-weight:400; }
+
+/* ── 함께 일하는 의사 ───────────────────────────────────── */
+.doc-grid{ display:grid; grid-template-columns:repeat(2,1fr); gap:1rem 1rem; margin-top:1.5rem; list-style:none; padding:0; }
+@media (min-width:768px){ .doc-grid{ grid-template-columns:repeat(4,1fr); } }
+.doc .pic{ aspect-ratio:1/1; border-radius:var(--r); overflow:hidden; background:var(--cream); }
+.doc .pic img{
+  width:100%; height:100%; object-fit:cover; object-position:top;
+  transform:scale(var(--dz,1)); transform-origin:top center;
+  transition:transform .5s var(--ease);
+}
+.doc:hover .pic img{ transform:scale(calc(var(--dz,1) * 1.03)); }
+.doc h3{ margin:0.55rem 0 0; font-size:0.9375rem; font-weight:500; }
+.doc p{ margin:0.1rem 0 0; font-size:0.8125rem; color:var(--stone); }
+
+/* ── 우측 목차 ──────────────────────────────────────────── */
+.toc-aside{ display:none; }
+@media (min-width:1024px){ .toc-aside{ display:block; } }
+.toc{ position:sticky; top:7rem; }
+.toc .tt{ font-size:0.8125rem; letter-spacing:0.1em; color:var(--ink); }
+.toc ol{ list-style:none; margin:1rem 0 0; padding:1rem 0 0; border-top:1px solid var(--ink); }
+.toc a{
+  display:block; padding:0.5rem 0; font-size:0.9375rem;
+  color:var(--stone); transition:color .2s;
+}
+.toc a:hover{ color:var(--ink); }
+
+/* ── 오버레이 (라이트박스 / 영상) ───────────────────────── */
+.ovl{
+  position:fixed; inset:0; z-index:100; background:rgba(12,12,12,0.9);
+  display:grid; place-items:center; padding:1.25rem;
+}
+.ovl[hidden]{ display:none; }
+.ovl-close{
+  position:absolute; top:1.25rem; right:1.25rem; z-index:5;
+  width:2.75rem; height:2.75rem; border-radius:999px; cursor:pointer;
+  border:1px solid rgba(255,255,255,0.65); background:rgba(15,15,15,0.45); color:#fff;
+  display:grid; place-items:center; font-size:1.25rem; line-height:1;
+}
+.ovl-nav{
+  position:absolute; top:50%; transform:translateY(-50%); z-index:5;
+  width:2.75rem; height:2.75rem; border-radius:999px; cursor:pointer;
+  border:1px solid rgba(255,255,255,0.65); background:rgba(15,15,15,0.45); color:#fff;
+  display:grid; place-items:center; font-size:1.125rem;
+}
+.ovl-prev{ left:1rem; } .ovl-next{ right:1rem; }
+#lb img{
+  max-width:min(90vw,56rem); max-height:80vh; width:auto; height:auto;
+  border-radius:var(--r); background:var(--cream);
+  box-shadow:0 24px 60px rgba(0,0,0,0.45);
+}
+#lb .cnt{
+  position:absolute; bottom:1.25rem; left:50%; transform:translateX(-50%);
+  font-size:0.8125rem; letter-spacing:0.06em; color:rgba(255,255,255,0.9);
+  background:rgba(15,15,15,0.45); border-radius:999px; padding:0.25rem 0.75rem;
+}
+.vframe{
+  width:min(92vw,58rem); aspect-ratio:16/9; background:#000;
+  border-radius:var(--r); overflow:hidden;
+}
+.vframe.portrait{ width:min(92vw, 24rem); aspect-ratio:9/16; max-height:85vh; }
+.vframe iframe{ width:100%; height:100%; border:0; display:block; }
+
+/* ── 푸터 ──────────────────────────────────────────────── */
+footer{ background:var(--cream); }
+.foot-in{ padding:2.5rem 0 3rem; font-size:0.8125rem; color:var(--stone); line-height:1.8; }
+.foot-in b{ color:var(--ink); font-weight:600; }
+.foot-in .fine{ margin-top:1.25rem; font-size:0.6875rem; color:var(--mist); }
+
+@media (prefers-reduced-motion:reduce){
+  html{ scroll-behavior:auto; }
+  *{ transition:none !important; animation:none !important; }
+}
+:focus-visible{ outline:2px solid var(--sky-deep); outline-offset:2px; }
+</style>
+</head>
+<body>
+
+<div class="demo-bar"><b>검토용 시안</b> — 정한미 원장 의료진 페이지 구조 개편안 · 실제 서비스 페이지가 아닙니다</div>
+
+<header class="site-header">
+  <div class="wrapper header-inner">
+    <a href="https://newhealhouse.vercel.app/" class="brand" aria-label="힐하우스피부과">
+      <img src="images/brand/wordmark-en.png" alt="HEAL HOUSE DERMATOLOGY"
+           onerror="fb(this,'/images/brand/wordmark-en.png')">
+    </a>
+    <nav aria-label="주 메뉴">
+      <ul class="gnb">
+        <li><a href="https://newhealhouse.vercel.app/columns/">칼럼</a></li>
+        <li><a href="https://newhealhouse.vercel.app/doctors/" aria-current="page">의료진</a></li>
+        <li><a href="https://newhealhouse.vercel.app/signatures/">작·우·빛 얼굴 만들기</a></li>
+        <li><a href="https://newhealhouse.vercel.app/antiaging/">안티에이징</a></li>
+        <li><a href="https://newhealhouse.vercel.app/vitiligo/">백반증</a></li>
+        <li><a href="https://newhealhouse.vercel.app/news/">소식</a></li>
+        <li><a href="https://newhealhouse.vercel.app/clinics/">지점</a></li>
+      </ul>
+    </nav>
+    <a class="btn-line" href="https://newhealhouse.vercel.app/doctors/jung-hanmi/" target="_blank" rel="noopener">원본 페이지 <span aria-hidden="true">→</span></a>
+  </div>
+</header>
+
+<main>
+  <!-- ═══════════ 프로필 히어로 + 캐치프레이즈 ═══════════ -->
+  <section class="wrapper hero" id="message" aria-label="인사말">
+    <div class="hero-text">
+      <div class="catch-block">
+        <p class="hello">“안녕하세요, 정한미입니다”</p>
+        <p class="catch">한 번의 시술로 잊히는 의사가 아니라,<br>얼굴을 오래 맡길 수 있는 의사가 되겠습니다.</p>
+      </div>
+      <div class="who">
+        <h1>정한미</h1>
+        <p>피부과 전문의 · 강남점</p>
+      </div>
+    </div>
+    <figure>
+      <div class="xfade">
+        <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 피부과 전문의" loading="eager"
+             onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+        <img src="images/doctors/jung-hanmi-gown2.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-1" loading="lazy"
+             onerror="fb(this,'/images/doctors/jung-hanmi-gown2.jpg')">
+        <img src="images/doctors/jung-hanmi-scrub.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-2" loading="lazy"
+             onerror="fb(this,'/images/doctors/jung-hanmi-scrub.jpg')">
+        <img src="images/doctors/jung-hanmi-casual.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-3" loading="lazy"
+             onerror="fb(this,'/images/doctors/jung-hanmi-casual.jpg')">
+        <img src="images/doctors/jung-hanmi-suit.jpg" alt="" aria-hidden="true" class="hh-xf hh-xf-4" loading="lazy"
+             onerror="fb(this,'/images/doctors/jung-hanmi-suit.jpg')">
+      </div>
+      <figcaption><span class="label-caps">Heal House</span></figcaption>
+    </figure>
+  </section>
+
+  <div class="wrapper layout">
+    <div class="flow">
+
+      <!-- ═══════════ 진료 철학 ═══════════ -->
+      <section class="sec phil" id="philosophy" aria-label="진료 철학">
+        <p class="label-caps">Philosophy</p>
+        <h2 class="sec-title">저는 이런 마음으로 진료를 합니다</h2>
+
+        <p class="phil-quote">“원장님, 유명하고 비싼 시술을 받았는데 효과가 없는 거 같아요.”</p>
+        <p>진료실에서 이런 하소연을 들을 때마다 안타까운 마음이 듭니다. 살펴보면 대부분 원인은 하나로 좁혀집니다. 시술을 먼저 정해두고 거기에 얼굴을 맞췄기 때문이죠.</p>
+        <p>그래서 저는 늘 반대로 진료합니다. 어떤 시술이 필요한지 정하기 전에 얼굴부터 가만히 들여다봅니다. 환자분만이 가진 매력을 살리려면 어디를 어떻게 다듬는 것이 좋을지 먼저 밑그림을 그리는 겁니다. 이런 과정을 거쳐 완성되는 것이 바로 저희가 추구하는 <strong>‘작우빛(작고 우아한 빛나는 얼굴)’</strong>입니다.</p>
+        <p>제가 생각하는 진짜 좋은 시술은 티가 나는 시술이 아닙니다. “요즘 좋은 일 있어? 얼굴 참 좋아 보인다”라는 기분 좋은 인사를 듣게 해 드리는 것입니다. 원래 그랬던 것처럼 자연스럽게, 그리고 5년, 10년 뒤에도 변함없이 아름다운 얼굴을 만들어 드리는 것이 제 진료의 목표입니다.</p>
+      </section>
+
+      <!-- ═══════════ 경력·학력·학술 ═══════════ -->
+      <section class="sec" id="profile" aria-label="경력·학력·학술">
+        <p class="label-caps">Profile</p>
+        <h2 class="sec-title">경력·학력·학술</h2>
+        <div class="profile-grid">
+          <div>
+            <h3><span class="label-caps">Career</span><span class="ko">경력</span></h3>
+            <ul>
+              <li>힐하우스피부과 대표</li>
+              <li>전) 후즈후피부과 동탄점</li>
+              <li>보건복지부 인증 피부과 전문의</li>
+              <li>가톨릭대학교 성빈센트병원 피부과 임상강사</li>
+              <li>가톨릭중앙의료원 인턴 및 피부과 전공의</li>
+            </ul>
+          </div>
+          <div>
+            <h3><span class="label-caps">Education</span><span class="ko">학력</span></h3>
+            <ul>
+              <li>가톨릭대학교 의과대학 의학과 졸업</li>
+            </ul>
+            <h3 style="margin-top:1.75rem;"><span class="label-caps">Academic</span><span class="ko">학술</span></h3>
+            <ul>
+              <li>대한피부과학회 · 대한아토피피부염학회 · 대한건선학회 · 대한모발학회 · 대한미용외과학회 · 대한여드름학회 정회원</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 외부 활동 (갤러리/리스트 토글) ═══════════ -->
+      <section class="sec" id="activities" data-view="gallery" aria-label="외부 활동">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Activities</p>
+            <h2 class="sec-title">진료실 밖의 정한미 원장</h2>
+          </div>
+          <div class="vt" role="group" aria-label="보기 방식">
+            <button type="button" data-view-btn="gallery" aria-pressed="true">갤러리</button>
+            <button type="button" data-view-btn="list" aria-pressed="false">리스트</button>
+          </div>
+        </div>
+        <p class="demo-note">※ 아래 카드 문구·일자는 시안용 예시입니다. 소식 기사 작성 시 교체 예정.</p>
+
+        <!-- ✏️ 외부 활동 카드: 실제 소식 작성 시 문구 교체 -->
+        <div class="act-grid">
+          <article class="act-card">
+            <div class="imgbox" data-file="images/activities/book-01.jpg">
+              <img src="images/activities/book-01.jpg" alt="작고 우아한 빛나는 얼굴 만들기 출간" loading="lazy" onerror="ph(this)">
+            </div>
+            <div class="act-body">
+              <span class="chip">저서·논문</span>
+              <h3 class="act-title">《작고 우아한 빛나는 얼굴 만들기》 출간</h3>
+              <p class="act-line">정한미 원장이 피부과 전문의 9인과 함께 쓴 안티에이징 안내서입니다.</p>
+              <time class="act-date" datetime="2026-07">2026. 07</time>
+            </div>
+          </article>
+
+          <article class="act-card">
+            <div class="imgbox" data-file="images/activities/lecture-01.jpg">
+              <img src="images/activities/lecture-01.jpg" alt="2026 코리아더마 강연" loading="lazy" onerror="ph(this)">
+            </div>
+            <div class="act-body">
+              <span class="chip">학회 발표·강연</span>
+              <h3 class="act-title">2026 코리아더마 연자 초청 강연</h3>
+              <p class="act-line">국내 피부과 학술 행사에 연자로 초청되어 강연했습니다.</p>
+              <time class="act-date" datetime="2026">2026</time>
+            </div>
+          </article>
+
+          <article class="act-card">
+            <div class="imgbox" data-file="images/activities/paper-01.jpg">
+              <img src="images/activities/paper-01.jpg" alt="학술 리뷰 논문" loading="lazy" onerror="ph(this)">
+            </div>
+            <div class="act-body">
+              <span class="chip">저서·논문</span>
+              <h3 class="act-title">피부 리쥬버네이션 리뷰 논문 게재 (예시)</h3>
+              <p class="act-line">에너지 기반 장비를 주제로 한 학술 리뷰 논문. 서지 정보 확인 후 교체.</p>
+              <time class="act-date">—</time>
+            </div>
+          </article>
+
+          <article class="act-card">
+            <div class="imgbox" data-file="images/activities/event-01.jpg">
+              <img src="images/activities/event-01.jpg" alt="피부콘서트" loading="lazy" onerror="ph(this)">
+            </div>
+            <div class="act-body">
+              <span class="chip">강연·행사</span>
+              <h3 class="act-title">피부콘서트 개최 (예시)</h3>
+              <p class="act-line">구독자·환자와 함께한 오프라인 행사입니다.</p>
+              <time class="act-date">—</time>
+            </div>
+          </article>
+        </div>
+
+        <div class="act-list">
+          <div class="act-row"><span class="chip">저서·논문</span><span class="t">《작고 우아한 빛나는 얼굴 만들기》 출간</span><time datetime="2026-07">2026. 07</time></div>
+          <div class="act-row"><span class="chip">학회 발표·강연</span><span class="t">2026 코리아더마 연자 초청 강연</span><time datetime="2026">2026</time></div>
+          <div class="act-row"><span class="chip">저서·논문</span><span class="t">피부 리쥬버네이션 리뷰 논문 게재 (예시)</span><time>—</time></div>
+          <div class="act-row"><span class="chip">강연·행사</span><span class="t">피부콘서트 개최 (예시)</span><time>—</time></div>
+        </div>
+      </section>
+
+      <!-- ═══════════ 영상으로 만나는 정한미 원장 ═══════════ -->
+      <section class="sec" id="media" aria-label="영상">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Media</p>
+            <h2 class="sec-title">영상으로 만나는 정한미 원장</h2>
+            <p class="sec-sub">진료실에서 못다 한 피부 이야기를 영상으로 풀어드립니다. 유튜브 ‘피부텐텐’에서 더 많은 영상을 만나보세요.</p>
+          </div>
+          <a class="sec-link" href="https://www.youtube.com/@pibutenten" target="_blank" rel="noopener">채널 보기 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <!-- ✏️ 영상 설정: data-id="" 에 유튜브 영상 ID 입력 (예: youtube.com/watch?v=abc123 → abc123)
+             · 비워두면 클릭 시 피부텐텐 채널이 새 창으로 열립니다.
+             · 인스타 릴스로 쓰려면: data-kind="reel" data-url="릴스 주소" 로 교체 (클릭 시 새 창) -->
+        <div class="yt-grid">
+          <div>
+            <button type="button" class="vcard" data-kind="youtube" data-id="">
+              <div class="imgbox" data-file="images/videos/yt-01.jpg">
+                <img src="images/videos/yt-01.jpg" alt="유튜브 영상 1" loading="lazy" onerror="ph(this)">
+              </div>
+              <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
+            </button>
+            <p class="vcap">영상 제목이 들어갑니다 (예시)</p>
+          </div>
+          <div>
+            <button type="button" class="vcard" data-kind="youtube" data-id="">
+              <div class="imgbox" data-file="images/videos/yt-02.jpg">
+                <img src="images/videos/yt-02.jpg" alt="유튜브 영상 2" loading="lazy" onerror="ph(this)">
+              </div>
+              <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
+            </button>
+            <p class="vcap">영상 제목이 들어갑니다 (예시)</p>
+          </div>
+        </div>
+
+        <div class="shorts-grid">
+          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 1">
+            <div class="imgbox" data-file="images/videos/shorts-01.jpg">
+              <img src="images/videos/shorts-01.jpg" alt="" loading="lazy" onerror="ph(this)">
+            </div>
+            <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
+          </button>
+          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 2">
+            <div class="imgbox" data-file="images/videos/shorts-02.jpg">
+              <img src="images/videos/shorts-02.jpg" alt="" loading="lazy" onerror="ph(this)">
+            </div>
+            <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
+          </button>
+          <button type="button" class="vcard" data-kind="shorts" data-id="" aria-label="쇼츠 영상 3">
+            <div class="imgbox" data-file="images/videos/shorts-03.jpg">
+              <img src="images/videos/shorts-03.jpg" alt="" loading="lazy" onerror="ph(this)">
+            </div>
+            <span class="play"><span><svg viewBox="0 0 12 14" aria-hidden="true"><path d="M0 0l12 7-12 7z"/></svg></span></span>
+          </button>
+        </div>
+      </section>
+
+      <!-- ═══════════ 강남점 공간 ═══════════ -->
+      <section class="sec" id="space" aria-label="병원 공간">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Space</p>
+            <h2 class="sec-title">정한미 원장이 있는 공간</h2>
+            <p class="sec-sub">진료도, 시술도 이곳에서 이뤄집니다. 정한미 원장을 만날 수 있는 상담실부터 시술실까지 미리 둘러보세요.</p>
+          </div>
+          <a class="sec-link" href="https://newhealhouse.vercel.app/clinics/gangnam/" target="_blank" rel="noopener">지점 안내 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <p class="space-cap">힐하우스피부과 강남점</p>
+        <div class="tile-grid" id="space-grid">
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-01.jpg"><img src="images/clinics/gangnam/4f-01.jpg" alt="힐하우스피부과 강남점 내부 1" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-01.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-02.jpg"><img src="images/clinics/gangnam/4f-02.jpg" alt="힐하우스피부과 강남점 내부 2" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-02.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-03.jpg"><img src="images/clinics/gangnam/4f-03.jpg" alt="힐하우스피부과 강남점 내부 3" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-03.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-04.jpg"><img src="images/clinics/gangnam/4f-04.jpg" alt="힐하우스피부과 강남점 내부 4" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-04.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-05.jpg"><img src="images/clinics/gangnam/4f-05.jpg" alt="힐하우스피부과 강남점 내부 5" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-05.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-06.jpg"><img src="images/clinics/gangnam/4f-06.jpg" alt="힐하우스피부과 강남점 내부 6" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-06.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-07.jpg"><img src="images/clinics/gangnam/4f-07.jpg" alt="힐하우스피부과 강남점 내부 7" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-07.jpg')"></div></button>
+          <button type="button" class="tile" data-lb><div class="imgbox" data-file="images/clinics/gangnam/4f-08.jpg"><img src="images/clinics/gangnam/4f-08.jpg" alt="힐하우스피부과 강남점 내부 8" loading="lazy" onerror="fb(this,'/images/clinics/gangnam/4f-08.jpg')"></div></button>
+        </div>
+      </section>
+
+      <!-- ═══════════ 시술 장비 ═══════════ -->
+      <section class="sec" id="equipment" aria-label="시술 장비">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Equipment</p>
+            <h2 class="sec-title">정한미 원장이 사용하는 장비</h2>
+            <p class="sec-sub">같은 고민이라도 피부 상태에 따라 다른 장비를 씁니다. 정한미 원장이 진료에 사용하는 장비들을 소개합니다.</p>
+          </div>
+          <a class="sec-link" href="https://newhealhouse.vercel.app/antiaging/" target="_blank" rel="noopener">전체 장비 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+
+        <div class="eq-grid" id="eq-grid">
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/soprano-titanium/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/soprano-titanium.png" alt="소프라노 티타늄" loading="lazy" onerror="fb(this,'/images/equipment/soprano-titanium.png')"></div><h3>소프라노 티타늄</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/thermage-flx/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/thermage-flx.png" alt="써마지FLX" loading="lazy" onerror="fb(this,'/images/equipment/thermage-flx.png')"></div><h3>써마지FLX</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/alltight/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/alltight.png" alt="올타이트" loading="lazy" onerror="fb(this,'/images/equipment/alltight.png')"></div><h3>올타이트</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/ulthera-prime/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/ulthera-prime.png" alt="울쎄라피 프라임" loading="lazy" onerror="fb(this,'/images/equipment/ulthera-prime.png')"></div><h3>울쎄라피 프라임</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/tenthera/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/tenthera.png" alt="텐써마" loading="lazy" onerror="fb(this,'/images/equipment/tenthera.png')"></div><h3>텐써마</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/piamo/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/piamo.png" alt="피아모" loading="lazy" onerror="fb(this,'/images/equipment/piamo.png')"></div><h3>피아모</h3></a>
+          <a class="eq" href="https://newhealhouse.vercel.app/antiaging/rejuran/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/rejuran.png" alt="리쥬란 힐러" loading="lazy" onerror="fb(this,'/images/equipment/rejuran.png')"></div><h3>리쥬란 힐러</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/lituo/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/lituo.png" alt="리투오" loading="lazy" onerror="fb(this,'/images/equipment/lituo.png')"></div><h3>리투오</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/mirajet/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/mirajet.png" alt="미라젯" loading="lazy" onerror="fb(this,'/images/equipment/mirajet.png')"></div><h3>미라젯</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/belotero-revive/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/belotero-revive.png" alt="벨로테로 리바이브" loading="lazy" onerror="fb(this,'/images/equipment/belotero-revive.png')"></div><h3>벨로테로 리바이브</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/skinvive/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/skinvive.png" alt="스킨바이브" loading="lazy" onerror="fb(this,'/images/equipment/skinvive.png')"></div><h3>스킨바이브</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/juvelook/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/juvelook.png" alt="쥬베룩" loading="lazy" onerror="fb(this,'/images/equipment/juvelook.png')"></div><h3>쥬베룩</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/hilo-wave/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/hilo-wave.png" alt="힐로웨이브" loading="lazy" onerror="fb(this,'/images/equipment/hilo-wave.png')"></div><h3>힐로웨이브</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/ha-filler/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/ha-filler.png" alt="HA필러" loading="lazy" onerror="fb(this,'/images/equipment/ha-filler.png')"></div><h3>HA필러</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/radiesse/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/radiesse.png" alt="레디어스" loading="lazy" onerror="fb(this,'/images/equipment/radiesse.png')"></div><h3>레디어스</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/sculptra/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/sculptra.png" alt="스컬트라" loading="lazy" onerror="fb(this,'/images/equipment/sculptra.png')"></div><h3>스컬트라</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/juvelook-volume/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/juvelook-volume.png" alt="쥬베룩볼륨" loading="lazy" onerror="fb(this,'/images/equipment/juvelook-volume.png')"></div><h3>쥬베룩볼륨</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/the-l-injection/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/the-l-injection.png" alt="더엘주사" loading="lazy" onerror="fb(this,'/images/equipment/the-l-injection.png')"></div><h3>더엘주사</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/juvgen/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/juvgen.png" alt="쥬브젠" loading="lazy" onerror="fb(this,'/images/equipment/juvgen.png')"></div><h3>쥬브젠</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/virtue-rf/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/virtue-rf.png" alt="버츄RF" loading="lazy" onerror="fb(this,'/images/equipment/virtue-rf.png')"></div><h3>버츄RF</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/hydro-lifting/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/hydro-lifting.png" alt="하이드로 리프팅" loading="lazy" onerror="fb(this,'/images/equipment/hydro-lifting.png')"></div><h3>하이드로 리프팅</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/cellfit/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/cellfit.png" alt="코레지셀핏" loading="lazy" onerror="fb(this,'/images/equipment/cellfit.png')"></div><h3>코레지셀핏</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/facial-ems/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/facial-ems.png" alt="페이셜 EMS(이브시너지)" loading="lazy" onerror="fb(this,'/images/equipment/facial-ems.png')"></div><h3>페이셜 EMS(이브시너지)</h3></a>
+          <a class="eq more" href="https://newhealhouse.vercel.app/antiaging/whitening/" target="_blank" rel="noopener"><div class="pad"><img src="images/equipment/default.svg" alt="화이트닝" loading="lazy" onerror="fb(this,'/images/equipment/default.svg')"></div><h3>화이트닝</h3></a>
+          <button type="button" class="plus" id="eq-plus" aria-label="시술 장비 더 보기"><span aria-hidden="true">+</span></button>
+        </div>
+      </section>
+
+      <!-- ═══════════ 칼럼 ═══════════ -->
+      <section class="sec" id="columns" aria-label="칼럼">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Columns</p>
+            <h2 class="sec-title">진료실에서 자주 받는 질문들</h2>
+            <p class="sec-sub">정한미 원장이 답해 드립니다.</p>
+          </div>
+          <a class="sec-link" href="https://newhealhouse.vercel.app/columns/" target="_blank" rel="noopener">더보기 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <div class="col-grid">
+          <article class="ccard">
+            <h3><a href="https://newhealhouse.vercel.app/columns/personalized-facial-design/" target="_blank" rel="noopener">같은 시술을 받아도 결과가 다른 이유는? 얼굴에 맞춘 1:1 디자인의 차이</a></h3>
+            <div class="byline">
+              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
+            </div>
+          </article>
+          <article class="ccard">
+            <h3><a href="https://newhealhouse.vercel.app/columns/juvgen-nasolabial-folds/" target="_blank" rel="noopener">필러는 소용없나요? 팔자주름에 효과적인 시술 추천</a></h3>
+            <div class="byline">
+              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
+            </div>
+          </article>
+          <article class="ccard">
+            <h3><a href="https://newhealhouse.vercel.app/columns/the-l-injection-face-slimming/" target="_blank" rel="noopener">수술없이 얼굴 작아지는 방법 없나요?</a></h3>
+            <div class="byline">
+              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
+            </div>
+          </article>
+          <article class="ccard">
+            <h3><a href="https://newhealhouse.vercel.app/columns/sculptra-peanut-shaped-face/" target="_blank" rel="noopener">땅콩형얼굴인데, 뭐가 가장 효과 좋을까요?</a></h3>
+            <div class="byline">
+              <img src="images/doctors/jung-hanmi-gown1.jpg" alt="정한미 원장" onerror="fb(this,'/images/doctors/jung-hanmi-gown1.jpg')">
+              <span class="nm">정한미<span class="mt">피부과 전문의</span></span>
+            </div>
+          </article>
+        </div>
+      </section>
+
+      <!-- ═══════════ 함께 일하는 의사 ═══════════ -->
+      <section class="sec" id="colleagues" aria-label="함께 일하는 의사">
+        <div class="sec-head">
+          <div>
+            <p class="label-caps">Colleagues</p>
+            <h2 class="sec-title">함께 일하는 의사</h2>
+          </div>
+          <a class="sec-link" href="https://newhealhouse.vercel.app/doctors/" target="_blank" rel="noopener">더보기 <span class="arr" aria-hidden="true">→</span></a>
+        </div>
+        <ul class="doc-grid">
+          <li class="doc">
+            <a href="https://newhealhouse.vercel.app/doctors/bae-jungmin/" target="_blank" rel="noopener">
+              <div class="pic"><img src="images/doctors/bae-jungmin-gown1.jpg" alt="배정민 피부과 전문의" loading="lazy" style="--dz:1" onerror="fb(this,'/images/doctors/bae-jungmin-gown1.jpg')"></div>
+              <h3>배정민</h3><p>피부과 전문의</p>
+            </a>
+          </li>
+          <li class="doc">
+            <a href="https://newhealhouse.vercel.app/doctors/park-saemi/" target="_blank" rel="noopener">
+              <div class="pic"><img src="images/doctors/park-saemi-gown1.jpg" alt="박새미 피부과 전문의" loading="lazy" style="--dz:1.56" onerror="fb(this,'/images/doctors/park-saemi-gown1.jpg')"></div>
+              <h3>박새미</h3><p>피부과 전문의</p>
+            </a>
+          </li>
+          <li class="doc">
+            <a href="https://newhealhouse.vercel.app/doctors/chu-jiyoon/" target="_blank" rel="noopener">
+              <div class="pic"><img src="images/doctors/chu-jiyoon-gown1.jpg" alt="추지윤 피부과 전문의" loading="lazy" style="--dz:1.3" onerror="fb(this,'/images/doctors/chu-jiyoon-gown1.jpg')"></div>
+              <h3>추지윤</h3><p>피부과 전문의</p>
+            </a>
+          </li>
+        </ul>
+      </section>
+
+    </div>
+
+    <!-- ═══════════ 우측 앵커 목차 ═══════════ -->
+    <aside class="toc-aside" aria-label="목차">
+      <nav class="toc">
+        <p class="tt label-caps">정한미 원장 (강남점) 피부과 전문의</p>
+        <ol>
+          <li><a href="#message">인사말</a></li>
+          <li><a href="#philosophy">진료 철학</a></li>
+          <li><a href="#profile">경력·학력·학술</a></li>
+          <li><a href="#activities">진료실 밖의 활동</a></li>
+          <li><a href="#media">영상으로 만나기</a></li>
+          <li><a href="#space">강남점 공간</a></li>
+          <li><a href="#equipment">시술 장비</a></li>
+          <li><a href="#columns">칼럼</a></li>
+          <li><a href="#colleagues">함께 일하는 의사</a></li>
+        </ol>
+      </nav>
+    </aside>
+  </div>
+</main>
+
+<footer>
+  <div class="wrapper foot-in">
+    <p><b>힐하우스피부과 강남점</b> · 서울 강남구 강남대로 518, 4·5층 (논현동) · 02-6951-5761</p>
+    <p class="fine">본 페이지는 의료진 페이지 구조 개편 검토를 위한 내부 시안 데모입니다. © 2026 Heal House Dermatology.</p>
+  </div>
+</footer>
+
+<!-- ═══════════ 라이트박스 (공간 사진) ═══════════ -->
+<div class="ovl" id="lb" hidden role="dialog" aria-modal="true" aria-label="사진 확대 보기">
+  <button type="button" class="ovl-close" data-close aria-label="닫기">×</button>
+  <button type="button" class="ovl-nav ovl-prev" id="lb-prev" aria-label="이전 사진">←</button>
+  <img id="lb-img" src="" alt="힐하우스피부과 강남점 내부">
+  <button type="button" class="ovl-nav ovl-next" id="lb-next" aria-label="다음 사진">→</button>
+  <p class="cnt" id="lb-cnt"></p>
+</div>
+
+<!-- ═══════════ 영상 모달 ═══════════ -->
+<div class="ovl" id="vm" hidden role="dialog" aria-modal="true" aria-label="영상 재생">
+  <button type="button" class="ovl-close" data-close aria-label="닫기">×</button>
+  <div class="vframe" id="vm-frame"></div>
+</div>
+
+<script>
+(function(){
+  var CHANNEL = 'https://www.youtube.com/@pibutenten';
+  function lock(on){ document.documentElement.style.overflow = on ? 'hidden' : ''; }
+
+  /* 외부 활동: 갤러리 ↔ 리스트 토글 */
+  var act = document.getElementById('activities');
+  act.querySelectorAll('[data-view-btn]').forEach(function(btn){
+    btn.addEventListener('click', function(){
+      act.dataset.view = btn.dataset.viewBtn;
+      act.querySelectorAll('[data-view-btn]').forEach(function(b){
+        b.setAttribute('aria-pressed', String(b === btn));
+      });
+    });
+  });
+
+  /* 장비 더보기 */
+  var eqPlus = document.getElementById('eq-plus');
+  if (eqPlus) eqPlus.addEventListener('click', function(){
+    document.getElementById('eq-grid').classList.add('open');
+    eqPlus.remove();
+  });
+
+  /* 라이트박스 */
+  var lb = document.getElementById('lb'),
+      lbImg = document.getElementById('lb-img'),
+      lbCnt = document.getElementById('lb-cnt'),
+      tiles = Array.prototype.slice.call(document.querySelectorAll('#space-grid [data-lb]')),
+      cur = 0;
+  function lbShow(i){
+    cur = (i + tiles.length) % tiles.length;
+    var src = tiles[cur].querySelector('img');
+    lbImg.src = src.currentSrc || src.src;
+    lbCnt.textContent = (cur + 1) + ' / ' + tiles.length;
+  }
+  tiles.forEach(function(t, i){
+    t.addEventListener('click', function(){ lbShow(i); lb.hidden = false; lock(true); });
+  });
+  document.getElementById('lb-prev').addEventListener('click', function(){ lbShow(cur - 1); });
+  document.getElementById('lb-next').addEventListener('click', function(){ lbShow(cur + 1); });
+
+  /* 영상 모달 */
+  var vm = document.getElementById('vm'),
+      vmFrame = document.getElementById('vm-frame');
+  document.querySelectorAll('.vcard').forEach(function(card){
+    card.addEventListener('click', function(){
+      var kind = card.dataset.kind, id = (card.dataset.id || '').trim(), url = card.dataset.url;
+      if (kind === 'reel' && url){ window.open(url, '_blank', 'noopener'); return; }
+      if (!id){ window.open(CHANNEL, '_blank', 'noopener'); return; }
+      vmFrame.className = 'vframe' + (kind === 'shorts' ? ' portrait' : '');
+      vmFrame.innerHTML = '<iframe src="https://www.youtube-nocookie.com/embed/' + id +
+        '?autoplay=1&rel=0" title="YouTube video" allow="autoplay; encrypted-media; picture-in-picture" allowfullscreen></iframe>';
+      vm.hidden = false; lock(true);
+    });
+  });
+
+  /* 오버레이 공통 닫기 */
+  function closeOvl(ovl){
+    ovl.hidden = true; lock(false);
+    if (ovl === vm) vmFrame.innerHTML = '';
+  }
+  [lb, vm].forEach(function(ovl){
+    ovl.querySelector('[data-close]').addEventListener('click', function(){ closeOvl(ovl); });
+    ovl.addEventListener('click', function(e){ if (e.target === ovl) closeOvl(ovl); });
+  });
+  document.addEventListener('keydown', function(e){
+    if (e.key === 'Escape'){ if (!lb.hidden) closeOvl(lb); if (!vm.hidden) closeOvl(vm); }
+    if (!lb.hidden){
+      if (e.key === 'ArrowLeft') lbShow(cur - 1);
+      if (e.key === 'ArrowRight') lbShow(cur + 1);
+    }
+  });
+})();
+</script>
+</body>
+</html>
