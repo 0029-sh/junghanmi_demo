@@ -89,7 +89,6 @@ body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:var(--sans); font-size:16px; line-height:1.6;
   -webkit-font-smoothing:antialiased; word-break:keep-all;
-  overflow-x:hidden;
 }
 img{ display:block; }
 a{ color:inherit; text-decoration:none; }
@@ -229,9 +228,6 @@ button{ font-family:inherit; }
 .sig-block h3{ font-family:var(--serif); font-size:clamp(1.3125rem, 2.4vw, 1.5rem); font-weight:600; margin:0; }
 .sig-block .desc{ margin:0.4rem 0 0; font-size:0.9375rem; line-height:1.7; color:var(--charcoal); }
 .sig-slider{ position:relative; margin-top:1rem; }
-@media (min-width:1024px){
-  .sig-slider{ width:calc(min(100vw, 76rem) - 2 * clamp(1.25rem, 4vw, 2.5rem)); }
-}
 .sig-view{ position:relative; overflow:hidden; }
 .sig-view::before,
 .sig-view::after{
@@ -240,7 +236,6 @@ button{ font-family:inherit; }
 }
 .sig-view::before{ left:0;  background:linear-gradient(to right, var(--paper) 10%, rgba(255,255,255,0)); }
 .sig-view::after{  right:0; background:linear-gradient(to left,  var(--paper) 10%, rgba(255,255,255,0)); }
-@media (min-width:1024px){ .sig-view::after{ width:12rem; } }
 .sig-track{ display:flex; gap:0.75rem; transition:transform 0.55s var(--ease); will-change:transform; }
 .sig-slide{
   flex:0 0 78%; margin:0; min-width:0; cursor:pointer;
@@ -975,40 +970,74 @@ footer{ background:var(--cream); }
   function sigInit(sl, n){
     var view = sl.querySelector('.sig-view'),
         track = sl.querySelector('.sig-track'),
-        slides = Array.prototype.slice.call(track.children),
         cnt = sl.querySelector('.sig-cnt'),
         prev = sl.querySelector('.sig-prev'),
-        next = sl.querySelector('.sig-next'),
-        i = 0;
-    function center(){
-      var s = slides[i]; if (!s) return;
-      var x = view.clientWidth / 2 - (s.offsetLeft + s.offsetWidth / 2);
-      track.style.transform = 'translateX(' + x + 'px)';
-      slides.forEach(function(el, k){ el.classList.toggle('is-current', k === i); });
-      if (cnt) cnt.textContent = (i + 1) + ' / ' + n;
-    }
-    function go(to){ i = (to + n) % n; center(); }
+        next = sl.querySelector('.sig-next');
+
+    /* 사진이 1장(또는 안내 박스)뿐이면 가운데 고정 */
     if (n < 2){
       if (prev) prev.hidden = true;
       if (next) next.hidden = true;
       if (cnt) cnt.hidden = true;
-    } else {
-      prev.addEventListener('click', function(){ go(i - 1); });
-      next.addEventListener('click', function(){ go(i + 1); });
-      slides.forEach(function(el, k){
-        el.addEventListener('click', function(){ if (k !== i) go(k); });
-      });
-      var sx = null;
-      sl.addEventListener('touchstart', function(e){ sx = e.changedTouches[0].clientX; }, { passive:true });
-      sl.addEventListener('touchend', function(e){
-        if (sx === null) return;
-        var dx = e.changedTouches[0].clientX - sx;
-        if (Math.abs(dx) > 44) go(dx < 0 ? i + 1 : i - 1);
-        sx = null;
-      }, { passive:true });
+      var only = track.children[0];
+      function centerOne(){
+        if (!only) return;
+        track.style.transition = 'none';
+        track.style.transform = 'translateX(' + (view.clientWidth / 2 - (only.offsetLeft + only.offsetWidth / 2)) + 'px)';
+        only.classList.add('is-current');
+      }
+      window.addEventListener('resize', centerOne);
+      centerOne();
+      return;
     }
-    window.addEventListener('resize', center);
-    center();
+
+    /* 무한 순환: 앞뒤로 2장씩 복제해 현재 사진 양옆에 항상 이전·다음이 보이게 */
+    var originals = Array.prototype.slice.call(track.children), K = 2;
+    for (var a = 0; a < K; a++){
+      track.appendChild(originals[a % n].cloneNode(true));
+      track.insertBefore(originals[(n - 1 - (a % n) + n) % n].cloneNode(true), track.firstChild);
+    }
+    var slides = Array.prototype.slice.call(track.children),
+        v = K, busy = false;
+
+    function place(anim){
+      var s = slides[v];
+      if (!anim) track.style.transition = 'none';
+      track.style.transform = 'translateX(' + (view.clientWidth / 2 - (s.offsetLeft + s.offsetWidth / 2)) + 'px)';
+      if (!anim){ void track.offsetWidth; track.style.transition = ''; }
+      slides.forEach(function(el, k){ el.classList.toggle('is-current', k === v); });
+      if (cnt) cnt.textContent = ((((v - K) % n) + n) % n + 1) + ' / ' + n;
+    }
+    function settle(){
+      if (v >= n + K){ v -= n; place(false); }
+      else if (v < K){ v += n; place(false); }
+      busy = false;
+    }
+    function go(dir){
+      if (busy) return;
+      busy = true;
+      v += dir;
+      place(true);
+      setTimeout(settle, 580);
+    }
+    prev.addEventListener('click', function(){ go(-1); });
+    next.addEventListener('click', function(){ go(1); });
+    slides.forEach(function(el, k){
+      el.addEventListener('click', function(){
+        if (k === v || busy) return;
+        go(k < v ? -1 : 1);
+      });
+    });
+    var sx = null;
+    sl.addEventListener('touchstart', function(e){ sx = e.changedTouches[0].clientX; }, { passive:true });
+    sl.addEventListener('touchend', function(e){
+      if (sx === null) return;
+      var dx = e.changedTouches[0].clientX - sx;
+      if (Math.abs(dx) > 44) go(dx < 0 ? 1 : -1);
+      sx = null;
+    }, { passive:true });
+    window.addEventListener('resize', function(){ place(false); });
+    place(false);
   }
   document.querySelectorAll('.sig-slider').forEach(function(sl){
     var prefix = sl.dataset.prefix,
