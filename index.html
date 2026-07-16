@@ -89,6 +89,7 @@ body{
   margin:0; background:var(--paper); color:var(--ink);
   font-family:var(--sans); font-size:16px; line-height:1.6;
   -webkit-font-smoothing:antialiased; word-break:keep-all;
+  overflow-x:hidden;
 }
 img{ display:block; }
 a{ color:inherit; text-decoration:none; }
@@ -157,7 +158,7 @@ button{ font-family:inherit; }
 .hero figcaption{ margin-top:0.5rem; }
 
 .catch-block{ margin-top:0; }
-@media (min-width:1024px){ .catch-block{ order:-1; margin-top:7rem; max-width:27rem; } }
+@media (min-width:1024px){ .catch-block{ order:-1; margin-top:4rem; max-width:27rem; } }
 .hero-divider{
   width:100%; border:0; border-top:1px solid var(--hairline);
   margin:1.5rem 0 1.25rem;
@@ -184,6 +185,11 @@ button{ font-family:inherit; }
   font-size:clamp(1.3125rem, 2.8vw, 1.625rem); line-height:1.72;
   margin:0.45rem 0 0;
 }
+.hero-body{ margin-top:1.5rem; }
+.hero-body p{
+  margin:1.15rem 0 0; font-size:0.9375rem; line-height:1.85; color:var(--charcoal);
+}
+.hero-body p:first-child{ margin-top:0; }
 .who{ margin-top:0; }
 @media (min-width:1024px){ .who{ margin-top:auto; padding-top:2.5rem; text-align:right; align-self:flex-end; } }
 .who h1{ font-family:var(--serif); font-size:1.75rem; font-weight:500; margin:0; }
@@ -218,26 +224,31 @@ button{ font-family:inherit; }
 .sec-link .arr{ transition:transform .3s var(--ease); }
 .sec-link:hover .arr{ transform:translateX(4px); }
 
-/* ── 진료 철학 ──────────────────────────────────────────── */
-.phil-lead{
-  font-family:var(--serif); font-weight:600; color:var(--ink);
-  font-size:clamp(1.1875rem, 2.4vw, 1.375rem); line-height:1.85;
-  margin:1rem 0 0;
-}
-.phil p{
-  margin:1.25rem 0 0; max-width:42rem;
-  font-size:1rem; line-height:1.95; color:var(--charcoal);
-}
-
 /* ── 시그니처 시술 (전후 슬라이더) ─────────────────────── */
 .sig-block{ margin-top:2.25rem; }
 .sig-block h3{ font-family:var(--serif); font-size:clamp(1.3125rem, 2.4vw, 1.5rem); font-weight:600; margin:0; }
 .sig-block .desc{ margin:0.4rem 0 0; font-size:0.9375rem; line-height:1.7; color:var(--charcoal); }
-.sig-slider{ position:relative; margin-top:1rem; width:50%; min-width:min(100%, 20rem); }
-.sig-view{ overflow:hidden; border-radius:var(--r); }
-.sig-track{ display:flex; transition:transform 0.55s var(--ease); }
-.sig-slide{ flex:0 0 100%; margin:0; min-width:0; }
-.sig-slide .imgbox{ aspect-ratio:var(--sig-ar, 3 / 2); }
+.sig-slider{ position:relative; margin-top:1rem; }
+@media (min-width:1024px){
+  .sig-slider{ width:calc(min(100vw, 76rem) - 2 * clamp(1.25rem, 4vw, 2.5rem)); }
+}
+.sig-view{ position:relative; overflow:hidden; }
+.sig-view::before,
+.sig-view::after{
+  content:""; position:absolute; top:0; bottom:0; z-index:5; pointer-events:none;
+  width:clamp(1.75rem, 8vw, 4rem);
+}
+.sig-view::before{ left:0;  background:linear-gradient(to right, var(--paper) 10%, rgba(255,255,255,0)); }
+.sig-view::after{  right:0; background:linear-gradient(to left,  var(--paper) 10%, rgba(255,255,255,0)); }
+@media (min-width:1024px){ .sig-view::after{ width:12rem; } }
+.sig-track{ display:flex; gap:0.75rem; transition:transform 0.55s var(--ease); will-change:transform; }
+.sig-slide{
+  flex:0 0 78%; margin:0; min-width:0; cursor:pointer;
+  opacity:0.45; transition:opacity 0.45s var(--ease);
+}
+@media (min-width:1024px){ .sig-slide{ flex-basis:min(60%, 30rem); } }
+.sig-slide.is-current{ opacity:1; cursor:default; }
+.sig-slide .imgbox{ aspect-ratio:var(--sig-ar, 3 / 2); border-radius:var(--r); }
 .sig-empty{
   aspect-ratio:3/2; background:var(--cream); border-radius:var(--r);
   display:grid; place-items:center; text-align:center; padding:1.5rem;
@@ -245,20 +256,25 @@ button{ font-family:inherit; }
 }
 .sig-empty span{ font-size:0.75rem; color:var(--mist); }
 .sig-nav{
-  position:absolute; top:50%; transform:translateY(-50%); z-index:4;
+  position:absolute; top:50%; transform:translateY(-50%); z-index:6;
   width:2.5rem; height:2.5rem; border-radius:999px; cursor:pointer;
   border:1px solid rgba(255,255,255,0.65); background:rgba(15,15,15,0.45); color:#fff;
   display:grid; place-items:center; font-size:1rem;
   transition:background .2s;
 }
 .sig-nav:hover{ background:rgba(15,15,15,0.72); }
-.sig-prev{ left:0.75rem; } .sig-next{ right:0.75rem; }
+.sig-prev{ left:0.5rem; } .sig-next{ right:0.5rem; }
+@media (min-width:1024px){
+  .sig-prev{ left:calc(50% - min(30%, 15rem) - 3.25rem); }
+  .sig-next{ right:calc(50% - min(30%, 15rem) - 3.25rem); }
+}
 .sig-cnt{
-  position:absolute; top:0.6rem; right:0.75rem; z-index:4;
+  position:absolute; top:0.6rem; right:0.75rem; z-index:6;
   font-size:0.75rem; letter-spacing:0.06em; color:rgba(255,255,255,0.92);
   background:rgba(15,15,15,0.55); border-radius:999px; padding:0.2rem 0.65rem;
   font-variant-numeric:tabular-nums;
 }
+@media (min-width:1024px){ .sig-cnt{ right:calc(50% - min(30%, 15rem) + 0.6rem); } }
 .sig-legal{ margin:1.5rem 0 0; font-size:0.75rem; line-height:1.7; color:var(--mist); }
 
 /* ── 경력·학력·학술 ─────────────────────────────────────── */
@@ -268,8 +284,8 @@ button{ font-family:inherit; }
 .profile-grid h3 .ko{ font-family:var(--serif); font-size:1rem; font-weight:600; }
 .profile-grid ul{ list-style:none; margin:0.75rem 0 0; padding:0; border-top:1px solid var(--ink); }
 .profile-grid li{
-  border-bottom:1px solid var(--hairline); padding:0.55rem 0;
-  font-size:0.875rem; line-height:1.65; color:var(--charcoal);
+  padding:0.3rem 0;
+  font-size:0.875rem; line-height:1.7; color:var(--charcoal);
 }
 
 /* ── 외부 활동: 갤러리/리스트 토글 ──────────────────────── */
@@ -530,8 +546,12 @@ footer{ background:var(--cream); }
       </div>
       <hr class="hero-divider">
       <div class="catch-block">
-        <p class="hello">안녕하세요, 정한미입니다</p>
-        <p class="catch">한 번의 시술로 잊히는 의사가 아니라,<br>얼굴을 오래 맡길 수 있는 의사가 되겠습니다.</p>
+        <p class="hello">안녕하세요, 정한미입니다.</p>
+        <p class="catch">한 번의 시술로 기억되는 의사보다,<br>얼굴을 오래 믿고 맡길 수 있는 의사가 되고 싶습니다.</p>
+        <div class="hero-body">
+          <p>유명하고 비싼 시술도 얼굴에 맞지 않으면 만족스러운 결과를 만들기 어렵습니다. 그래서 저는 시술을 먼저 정하지 않습니다. 얼굴의 비율과 피부 상태, 환자분만의 매력을 충분히 살핀 뒤 필요한 변화를 설계합니다.</p>
+          <p>시술한 티보다 “요즘 얼굴이 좋아 보인다”는 말을 들을 수 있도록, 원래 내 얼굴처럼 자연스럽고 시간이 지나도 조화로운 아름다움을 만들겠습니다.</p>
+        </div>
       </div>
     </div>
     <figure>
@@ -552,14 +572,6 @@ footer{ background:var(--cream); }
 
   <div class="wrapper layout">
     <div class="flow">
-
-      <!-- ═══════════ 진료 철학 ═══════════ -->
-      <section class="sec phil" id="philosophy" aria-label="진료 철학">
-        <p class="label-caps">Philosophy</p>
-        <p class="phil-lead">안녕하세요, 정한미입니다.<br>한 번의 시술로 기억되는 의사보다,<br>얼굴을 오래 믿고 맡길 수 있는 의사가 되고 싶습니다.</p>
-        <p>유명하고 비싼 시술도 얼굴에 맞지 않으면 만족스러운 결과를 만들기 어렵습니다. 그래서 저는 시술을 먼저 정하지 않습니다. 얼굴의 비율과 피부 상태, 환자분만의 매력을 충분히 살핀 뒤 필요한 변화를 설계합니다.</p>
-        <p>시술한 티보다 “요즘 얼굴이 좋아 보인다”는 말을 들을 수 있도록, 원래 내 얼굴처럼 자연스럽고 시간이 지나도 조화로운 아름다움을 만들겠습니다.</p>
-      </section>
 
       <!-- ═══════════ 시그니처 시술 ═══════════ -->
       <section class="sec" id="signature" aria-label="시그니처 시술">
@@ -907,7 +919,6 @@ footer{ background:var(--cream); }
         <p class="tt label-caps">정한미 원장 (강남점) 피부과 전문의</p>
         <ol>
           <li><a href="#message">인사말</a></li>
-          <li><a href="#philosophy">진료 철학</a></li>
           <li><a href="#signature">시그니처 시술</a></li>
           <li><a href="#profile">경력·학력·학술</a></li>
           <li><a href="#activities">정한미 원장의 활동</a></li>
@@ -962,16 +973,21 @@ footer{ background:var(--cream); }
 
   /* 시그니처 전후 슬라이더: images/signature/ 의 번호 파일(01, 02…)을 자동 탐색해 슬라이드 생성 */
   function sigInit(sl, n){
-    var track = sl.querySelector('.sig-track'),
+    var view = sl.querySelector('.sig-view'),
+        track = sl.querySelector('.sig-track'),
+        slides = Array.prototype.slice.call(track.children),
         cnt = sl.querySelector('.sig-cnt'),
         prev = sl.querySelector('.sig-prev'),
         next = sl.querySelector('.sig-next'),
         i = 0;
-    function go(to){
-      i = (to + n) % n;
-      track.style.transform = 'translateX(-' + (i * 100) + '%)';
+    function center(){
+      var s = slides[i]; if (!s) return;
+      var x = view.clientWidth / 2 - (s.offsetLeft + s.offsetWidth / 2);
+      track.style.transform = 'translateX(' + x + 'px)';
+      slides.forEach(function(el, k){ el.classList.toggle('is-current', k === i); });
       if (cnt) cnt.textContent = (i + 1) + ' / ' + n;
     }
+    function go(to){ i = (to + n) % n; center(); }
     if (n < 2){
       if (prev) prev.hidden = true;
       if (next) next.hidden = true;
@@ -979,6 +995,9 @@ footer{ background:var(--cream); }
     } else {
       prev.addEventListener('click', function(){ go(i - 1); });
       next.addEventListener('click', function(){ go(i + 1); });
+      slides.forEach(function(el, k){
+        el.addEventListener('click', function(){ if (k !== i) go(k); });
+      });
       var sx = null;
       sl.addEventListener('touchstart', function(e){ sx = e.changedTouches[0].clientX; }, { passive:true });
       sl.addEventListener('touchend', function(e){
@@ -988,7 +1007,8 @@ footer{ background:var(--cream); }
         sx = null;
       }, { passive:true });
     }
-    go(0);
+    window.addEventListener('resize', center);
+    center();
   }
   document.querySelectorAll('.sig-slider').forEach(function(sl){
     var prefix = sl.dataset.prefix,
